@@ -1,5 +1,3 @@
 # KTIS
 
-testing if push works.
-
-idk.
+for now this file will be empty.
