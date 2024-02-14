@@ -1,0 +1,4 @@
+.sidebar-nav .nav-item {@apply rounded;}
+.sidebar-nav .nav-item a:hover {@apply ring-1 ring-purple-300 ring-inset;}
+.sidebar-nav .nav-item a[selected] {@apply bg-purple-300;}
+.sidebar-nav .nav-item a:active {@apply bg-purple-300;}

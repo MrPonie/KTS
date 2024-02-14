@@ -1,0 +1,3 @@
+.navlist-item {
+    @apply border border-purple-200;
+}
