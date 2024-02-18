@@ -4,17 +4,17 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Test;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
-class UserFactory extends Factory
+class TestFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Test::class;
 
     /**
      * Define the model's default state.
@@ -22,11 +22,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'created_by' => User::factory(),
-            'username' => $this->faker->userName(),
-            'password' => Hash::make('password'),
-            'last_login_at' => $this->faker->dateTime(),
-            'is_online' => $this->faker->boolean(),
+            'created_by' => User::factory(),
+            'name' => $this->faker->name(),
+            'content_json' => '{}',
+            'question_count' => $this->faker->randomNumber(),
+            'max_points' => $this->faker->randomFloat(2, 0, 999999.99),
         ];
     }
 }

@@ -1,0 +1,67 @@
+models:
+  Role:
+    name: string
+    description: string
+    permissions_json: json
+  
+  User:
+    created_by: id foreign:users.id nullable
+    username: string
+    password: string
+    last_login_at: timestamp
+    is_online: boolean
+
+  Role_User_Relation:
+    role_id: id foreign
+    user_id: id user
+
+  Resource:
+    created_by: id foreign:users.id nullable
+    data: blob
+  
+  Topic:
+    created_by: id foreign:users.id
+    name: string
+    description: string
+    question_count: integer unsigned
+
+  Question:
+    created_by: id foreign:users.id
+    body_json: json
+    input_json: json
+    answer_json: json
+    resources_json: json
+
+  Topic_Question:
+    topic_id: id foreign
+    question_id: id foreign
+
+  Topic_Shared_User:
+    topic_id: id foreign
+    user_id: id foreign
+    shared_by_id: id foreign:users
+
+  Test_Form:
+    created_by: id foreign:users.id
+    name: string
+    description: string
+    questions_json: json
+    question_count: integer unsigned
+    max_points: float:8,2
+
+  Test:
+    created_by: id foreign:users.id
+    name: string
+    content_json: json
+    question_count: integer unsigned
+    max_points: float:8,2
+
+  Response:
+    created_by: id foreign:users.id
+    test_id: id foreign
+    response_json: json
+
+  Test_User_Response:
+    test_id: id foreign
+    user_id: id foreign
+    response_id: id foreign nullable

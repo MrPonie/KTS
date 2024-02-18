@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Question extends Model
+class TestForm extends Model
 {
     use HasFactory;
 
@@ -17,10 +17,11 @@ class Question extends Model
      */
     protected $fillable = [
         'created_by',
-        'body_json',
-        'input_json',
-        'answer_json',
-        'resources_json',
+        'name',
+        'description',
+        'questions_json',
+        'question_count',
+        'max_points',
     ];
 
     /**
@@ -31,10 +32,8 @@ class Question extends Model
     protected $casts = [
         'id' => 'integer',
         'created_by' => 'integer',
-        'body_json' => 'array',
-        'input_json' => 'array',
-        'answer_json' => 'array',
-        'resources_json' => 'array',
+        'questions_json' => 'array',
+        'max_points' => 'float',
     ];
 
     public function createdBy(): BelongsTo

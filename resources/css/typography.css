@@ -1,0 +1,9 @@
+p {@apply text-base leading-6 text-gray-700;}
+
+label {@apply text-sm font-semibold text-gray-700;}
+
+h1 {@apply text-3xl font-semibold leading-9 text-gray-900;}
+
+h2 {@apply text-2xl font-semibold leading-8 text-gray-900;}
+
+h3 {@apply text-xl font-semibold leading-7 text-gray-900;}

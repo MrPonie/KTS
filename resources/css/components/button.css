@@ -1,5 +1,0 @@
-.btn {@apply p-2 rounded;}
-
-.btn-normal {@apply text-purple-500;}
-.btn-normal:hover {@apply ring-1 ring-purple-300 ring-inset;}
-.btn-normal:active {@apply bg-purple-300 ;}

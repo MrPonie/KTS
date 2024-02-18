@@ -1,0 +1,5 @@
+.input {@apply p-1;}
+
+.input-text {@apply input rounded border;}
+
+.input-error {@apply text-red-700;}

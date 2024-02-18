@@ -1,0 +1,10 @@
+.btn {@apply p-2 rounded;}
+
+.btn-normal {@apply text-purple-500;}
+.btn-normal:hover {@apply ring-1 ring-purple-300 ring-inset;}
+.btn-normal:active {@apply bg-purple-300 ;}
+
+.button {@apply px-2 py-1 rounded duration-75;}
+.button-primary {@apply button text-purple-500 hover:bg-purple-500 hover:text-white;}
+.button-primary-outline {@apply button text-purple-500 border border-purple-500 hover:bg-purple-500 hover:text-white;}
+.button-primary-filled {@apply button text-white bg-purple-500 hover:bg-purple-700;}

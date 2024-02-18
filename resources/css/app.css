@@ -1,8 +1,11 @@
-@import 'base.css';
-@import 'components/sidebar-nav.css';
-@import 'components/button.css';
-@import 'components/navlist.css';
+/* for some reason vite would not do @import after @tailwind so had to translate @tailwind to @import so that THAT KURWA WOULD STOP FUCKING COMPLAINING AND WORK LIKE IT'S SUPPOED TO... yes I am slightly angry */
+@import '/node_modules/tailwindcss/base.css';
+@import '/node_modules/tailwindcss/components.css';
+@import '/node_modules/tailwindcss/utilities.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'base.css';
+@import 'typography.css';
+@import 'components/buttons.css';
+@import 'components/inputs.css';
+@import 'components/sidebar-nav.css';
+@import 'components/navlist.css';

@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Test extends Model
+class Role extends Model
 {
     use HasFactory;
 
@@ -16,11 +15,9 @@ class Test extends Model
      * @var array
      */
     protected $fillable = [
-        'created_by',
         'name',
-        'content_json',
-        'question_count',
-        'max_points',
+        'description',
+        'permissions_json',
     ];
 
     /**
@@ -30,13 +27,6 @@ class Test extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'created_by' => 'integer',
-        'content_json' => 'array',
-        'max_points' => 'float',
+        'permissions_json' => 'array',
     ];
-
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 }

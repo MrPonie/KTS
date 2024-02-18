@@ -12,4 +12,4 @@
         <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
     @endif
 </head>
-<body>
+<body class="h-screen bg-gray-100">

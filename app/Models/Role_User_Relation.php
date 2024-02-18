@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Question extends Model
+class RoleUserRelation extends Model
 {
     use HasFactory;
 
@@ -16,11 +16,8 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'created_by',
-        'body_json',
-        'input_json',
-        'answer_json',
-        'resources_json',
+        'role_id',
+        'user_id',
     ];
 
     /**
@@ -30,14 +27,16 @@ class Question extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'created_by' => 'integer',
-        'body_json' => 'array',
-        'input_json' => 'array',
-        'answer_json' => 'array',
-        'resources_json' => 'array',
+        'role_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
-    public function createdBy(): BelongsTo
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

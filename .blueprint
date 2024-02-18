@@ -1,0 +1,50 @@
+created:
+    - database/factories/RoleFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/RoleUserRelationFactory.php
+    - database/factories/ResourceFactory.php
+    - database/factories/TopicFactory.php
+    - database/factories/QuestionFactory.php
+    - database/factories/TopicQuestionFactory.php
+    - database/factories/TopicSharedUserFactory.php
+    - database/factories/TestFormFactory.php
+    - database/factories/TestFactory.php
+    - database/factories/ResponseFactory.php
+    - database/factories/TestUserResponseFactory.php
+    - database/migrations/2024_02_18_112755_create_roles_table.php
+    - database/migrations/2024_02_18_112756_create_users_table.php
+    - database/migrations/2024_02_18_112757_create_role__user__relations_table.php
+    - database/migrations/2024_02_18_112758_create_resources_table.php
+    - database/migrations/2024_02_18_112759_create_topics_table.php
+    - database/migrations/2024_02_18_112800_create_questions_table.php
+    - database/migrations/2024_02_18_112801_create_topic__questions_table.php
+    - database/migrations/2024_02_18_112802_create_topic__shared__users_table.php
+    - database/migrations/2024_02_18_112803_create_test__forms_table.php
+    - database/migrations/2024_02_18_112804_create_tests_table.php
+    - database/migrations/2024_02_18_112805_create_responses_table.php
+    - database/migrations/2024_02_18_112806_create_test__user__responses_table.php
+    - app/Models/Role.php
+    - app/Models/User.php
+    - app/Models/Role_User_Relation.php
+    - app/Models/Resource.php
+    - app/Models/Topic.php
+    - app/Models/Question.php
+    - app/Models/Topic_Question.php
+    - app/Models/Topic_Shared_User.php
+    - app/Models/Test_Form.php
+    - app/Models/Test.php
+    - app/Models/Response.php
+    - app/Models/Test_User_Response.php
+models:
+    Role: { name: string, description: string, permissions_json: json }
+    User: { created_by: 'id foreign:users.id nullable', username: string, password: string, last_login_at: timestamp, is_online: boolean }
+    Role_User_Relation: { role_id: 'id foreign', user_id: 'id user' }
+    Resource: { created_by: 'id foreign:users.id nullable', data: blob }
+    Topic: { created_by: 'id foreign:users.id', name: string, description: string, question_count: 'integer unsigned' }
+    Question: { created_by: 'id foreign:users.id', body_json: json, input_json: json, answer_json: json, resources_json: json }
+    Topic_Question: { topic_id: 'id foreign', question_id: 'id foreign' }
+    Topic_Shared_User: { topic_id: 'id foreign', user_id: 'id foreign', shared_by_id: 'id foreign:users' }
+    Test_Form: { created_by: 'id foreign:users.id', name: string, description: string, questions_json: json, question_count: 'integer unsigned', max_points: 'float:8,2' }
+    Test: { created_by: 'id foreign:users.id', name: string, content_json: json, question_count: 'integer unsigned', max_points: 'float:8,2' }
+    Response: { created_by: 'id foreign:users.id', test_id: 'id foreign', response_json: json }
+    Test_User_Response: { test_id: 'id foreign', user_id: 'id foreign', response_id: 'id foreign nullable' }
