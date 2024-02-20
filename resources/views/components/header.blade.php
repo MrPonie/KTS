@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }}</title>
 
-    <!-- <link rel="stylesheet" href="{{ asset('app.css') }}"> -->
-    @if (file_exists(public_path('hot')))
-        @vite('resources/css/app.css')
-    @else
-        <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
-    @endif
+    <x-vite type="css" resource="resources/css/app.css"/>
+    <x-vite type="js" resource="resources/js/app.js"/>
 </head>
 <body class="h-screen bg-gray-100">

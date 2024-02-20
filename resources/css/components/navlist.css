@@ -1,3 +1,14 @@
-.navlist-item {
-    @apply border border-purple-200;
-}
+.navlist-item-container {@apply block;}
+
+.navlist-button {@apply text-left text-purple-500 hover:bg-purple-100 duration-75;}
+.navlist-item {@apply navlist-button w-full p-2;}
+.navlist-item.active {@apply bg-purple-500 text-white hover:bg-purple-600;}
+
+.navlist-sublist-trigger {@apply p-2 text-left text-purple-500 hover:bg-purple-100 duration-75;}
+.navlist-sublist-trigger.active {@apply bg-purple-50;}
+
+.navlist-item-container:not(.expanded) > .navlist-item-sublist {@apply hidden;}
+.navlist-item-container.expanded .navlist-item-sublist {@apply bg-purple-50 shadow-inner;}
+
+.navlist-subitem {@apply navlist-button w-full pl-6 pr-2 py-1;}
+.navlist-subitem.active {@apply bg-purple-500 text-white;}

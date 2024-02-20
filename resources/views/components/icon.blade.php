@@ -1,0 +1,1 @@
+<i class="{{ $family ? 'fa-'.$family : '' }} {{ $style ? 'fa-'.$style : '' }} fa-{{ $icon }}"></i>
