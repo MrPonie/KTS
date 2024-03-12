@@ -8,12 +8,13 @@ models:
     created_by: id foreign:users.id nullable
     username: string
     password: string
+    role_id: id foreign:roles.id nullable
     last_login_at: timestamp
-    is_online: boolean
+    is_online: boolean default:0
 
-  Role_User_Relation:
-    role_id: id foreign
-    user_id: id user
+  # Role_User_Relation:
+  #   role_id: id foreign
+  #   user_id: id user
 
   Resource:
     created_by: id foreign:users.id nullable

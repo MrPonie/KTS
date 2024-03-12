@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,9 +23,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            // 'created_by' => User::factory(),
+            'created_by' => null,
             'username' => $this->faker->userName(),
             'password' => Hash::make('password'),
+            'role_id' => null,
             'last_login_at' => $this->faker->dateTime(),
             'is_online' => $this->faker->boolean(),
         ];

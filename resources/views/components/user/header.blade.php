@@ -1,10 +1,12 @@
 <header class="w-full flex justify-between bg-white">
-    <h1 class="flex items-center">KITTY</h1>
+    <div class="flex items-center">
+        <h1>KITTY</h1>
+        @if (session('role'))
+             <h1 class="ml-2 pl-2 border-l border-gray-200 capitalize">{{ session('role')['name'] }}</h1>
+        @endif
+    </div>
     <div class="flex gap-2 p-2">
-        <button class="btn btn-normal flex items-center gap-1">
-            <div class="w-6 h-6 bg-gray-500"></div>
-            <p>USERNAME</p>
-        </button>
-        <x-button style="primary" text="MM"/>
+        <x-user.user_button/>
+        <x-button style="primary" text="MM" class="md:hidden"/>
     </div>
 </header>

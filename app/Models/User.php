@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
@@ -21,6 +22,7 @@ class User extends Model implements Authenticatable
         'created_by',
         'username',
         'password',
+        'role_id',
         'last_login_at',
         'is_online',
     ];
@@ -42,6 +44,7 @@ class User extends Model implements Authenticatable
     protected $casts = [
         'id' => 'integer',
         'created_by' => 'integer',
+        'role_id' => 'integer',
         'last_login_at' => 'timestamp',
         'is_online' => 'boolean',
     ];
@@ -49,5 +52,10 @@ class User extends Model implements Authenticatable
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 }

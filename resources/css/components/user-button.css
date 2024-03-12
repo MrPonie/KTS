@@ -1,0 +1,3 @@
+.user-button-container {@apply relative;}
+.user-button {@apply btn btn-normal flex items-center gap-1;}
+.user-button-popup {@apply absolute right-0 bg-white border border-gray-200 shadow rounded w-[200px];}

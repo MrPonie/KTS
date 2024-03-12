@@ -1,8 +1,6 @@
 @push('scripts')
     <x-vite type="js" resource="resources/js/components/navlist.js"/>
 @endpush
-@dump($focusitem)
-@dump($focussubitem)
 
 <div class="flex flex-col">
     @foreach ($list as $item)
