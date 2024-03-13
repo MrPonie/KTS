@@ -1,14 +1,4 @@
-@if (session('role'))
-@else
-    <?php 
-    header('Location: '.URL::to('/user'));
-    exit;
-    ?>
-@endif
-
-<x-header title="Users"/>
-
-@dump(session('role'))
+<x-header title="Export test form"/>
 
 <div class="flex flex-col w-full h-full">
     <div class="w-full">
@@ -16,10 +6,10 @@
     </div>
     <div class="page-container">
         <div class="page-sidebar">
-            <x-user.sidebar focusitem="Users" focussubitem="All users"/>
+            <x-user.sidebar focusitem="Test Form Vault" focussubitem="Export test form"/>
         </div>
         <div class="page-content">
-            all users page content
+            
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <x-header title="User"/>
 
-@dump(session('role'))
+<!-- @dump(session('role')) -->
 
 <div class="flex flex-col w-full h-full">
     <div class="w-full">

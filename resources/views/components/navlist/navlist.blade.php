@@ -18,7 +18,7 @@
             @if ($sublist = Arr::get($item, 'sublist'))
                 <div class="navlist-item-sublist flex flex-col">
                         @foreach ($sublist as $subitem)
-                            <button type="button" class="navlist-subitem {{ $focussubitem == Arr::get($subitem, 'name') ? 'active' : '' }}">{{ Arr::get($subitem, 'name') }}</button>
+                            <a href="{{ Arr::get($subitem, 'link') }}" class="navlist-subitem {{ $focussubitem == Arr::get($subitem, 'name') ? 'active' : '' }}">{{ Arr::get($subitem, 'name') }}</a>
                         @endforeach
                 </div>
             @endif
