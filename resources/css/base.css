@@ -1,3 +1,10 @@
 .page-container {@apply w-full h-full flex bg-white;}
 .page-sidebar {@apply basis-2/12 bg-white py-8;}
-.page-content {@apply w-full rounded-tl-xl shadow-inner bg-gray-100 p-4;}
+.page-content {@apply w-full rounded-tl-xl shadow-inner bg-gray-100 p-4 flex flex-col gap-4 overflow-y-auto;}
+
+.panel {@apply w-full border border-gray-200 bg-white rounded-lg shadow p-4;}
+
+.table {@apply w-full;}
+.table td, .table th {@apply p-2;}
+.table thead {@apply border-b border-gray-500;}
+.table tbody tr {@apply border-b border-gray-200;}

@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->foreignId('role_id')->nullable()->constrained();
+            $table->foreignId('picture_id')->nullable()->constrained('resources');
             $table->timestamp('last_login_at');
             $table->boolean('is_online')->default(0);
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
 

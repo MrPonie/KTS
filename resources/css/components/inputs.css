@@ -2,4 +2,9 @@
 
 .input-text {@apply input rounded border;}
 
+.input-select {
+    @apply input border border-gray-200 rounded;
+    background-color: rgba(0, 0, 0, 0);
+}
+
 .input-error {@apply text-red-700;}

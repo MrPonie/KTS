@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\GroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +36,16 @@ Route::prefix('user')->group(function() {
         Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 
         // "administrator role"
-        Route::get('/users', [UserController::class, 'users'])->name('user.users')->middleware('permission:view_users');
-        Route::get('/create_new_user', [UserController::class, 'create_new_user_view'])->name('user.create_new_user')->middleware('permission:edit_users');
-        Route::post('/create_new_user', [UserController::class, 'create_new_user'])->name('user.create_new_user')->middleware('permission:edit_users');
+        Route::get('/users', [UserController::class, 'users'])->name('users')->middleware('permission:view_users');
+        Route::get('/users/create', [UserController::class, 'create_new_user_view'])->name('users.create_new_user')->middleware('permission:edit_users');
+        Route::post('/users/create', [UserController::class, 'create_new_user'])->name('users.create_new_user')->middleware('permission:edit_users');
+        Route::post('/users/activate_user', [UserController::class, 'change_user_active_status'])->defaults('status', true)->name('users.activate_user')->middleware('permission:edit_users');
+        Route::post('/users/deactivate_user', [UserController::class, 'change_user_active_status'])->defaults('status', false)->name('users.deactivate_user')->middleware('permission:edit_users');
+        Route::get('/users/edit/{id}', [UserController::class, 'edit_user_view'])->name('users.edit')->middleware('permission:edit_users');
+        Route::post('/users/edit/{id}', [UserController::class, 'edit_user'])->name('users.edit')->middleware('permission:edit_users');
+        
+        Route::get('/groups', [GroupController::class, 'groups'])->name('groups')->middleware('permission:view_users');
+        Route::get('/groups/create', [GroupController::class, 'create_new_group_view'])->name('groups.create_new_group')->middleware('permission:edit_users');
 
         Route::get('/questions', [UserController::class, 'questions'])->name('user.questions')->middleware('permission:view_questions');
         Route::get('/topics', [UserController::class, 'topics'])->name('user.topics')->middleware('permission:view_questions');

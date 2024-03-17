@@ -43,9 +43,13 @@ class sidebar extends Component
             }
 
             if($permissions->view_users) {
-                $this->list[] = ['name'=>'Users','link'=>route('user.users'),'sublist'=>[
-                    ['name'=>'Create new user','link'=>route('user.create_new_user')],
-                ]];
+                $sublist = [];
+                if($permissions->edit_users) {
+                    $sublist[] = ['name'=>'Create new user','link'=>route('users.create_new_user')];
+                    $sublist[] = ['name'=>'Create new group','link'=>route('groups.create_new_group')];
+                }
+                $sublist[] = ['name'=>'Groups','link'=>route('groups')];
+                $this->list[] = ['name'=>'Users','link'=>route('users'),'sublist'=> $sublist ?: null,];
             }
             if($permissions->view_questions) {
                 $this->list[] = ['name'=>'Questions','link'=>route('user.questions'),'sublist'=>[

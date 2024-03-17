@@ -6,10 +6,11 @@
         <form action="{{ route('user.login') }}" method="post">
             @csrf
             <div class="flex flex-col gap-6">
-                <x-inputs.input_text name="username" label="Username"/>
-                <x-inputs.input_text type="password" name="password" label="Password"/>
+                <x-inputs.text type="hidden" name="top" label=""/>
+                <x-inputs.text type="text" name="username" label="Username"/>
+                <x-inputs.text type="password" name="password" label="Password"/>
                 <div class="flex">
-                    <x-button type="submit" text="Login" class="grow"/>
+                    <x-button type="submit" text="Login" class="grow justify-center"/>
                 </div>
             </div>
         </form>

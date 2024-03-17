@@ -4,6 +4,10 @@ models:
     description: string
     permissions_json: json
   
+  Group:
+    name: string
+    description: string
+
   User:
     created_by: id foreign:users.id nullable
     username: string
@@ -15,6 +19,10 @@ models:
   # Role_User_Relation:
   #   role_id: id foreign
   #   user_id: id user
+
+  Group_User_Relation:
+    group_id: id foreign
+    user_id: id foreign
 
   Resource:
     created_by: id foreign:users.id nullable

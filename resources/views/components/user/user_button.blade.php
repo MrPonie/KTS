@@ -1,6 +1,8 @@
-@push('scripts')
-    <x-vite type="js" resource="resources/js/components/user_button.js"/>
-@endpush
+@once
+    @push('scripts')
+        <x-vite type="js" resource="resources/js/components/user_button.js"/>
+    @endpush
+@endonce
 <?php $rnd = bin2hex(random_bytes(3)); ?>
 <div class="user-button-container">
     <button class="user-button">

@@ -1,0 +1,13 @@
+.alert {@apply rounded p-2 border;}
+
+.alert-info {@apply alert border-gray-500 bg-gray-200;}
+.alert-info * {@apply text-gray-900;}
+
+.alert-success {@apply alert border-green-500 bg-green-200;}
+.alert-success * {@apply text-green-900;}
+
+.alert-error {@apply alert border-red-500 bg-red-200 text-red-900;}
+.alert-error * {@apply text-red-900;}
+
+.alert-warning {@apply alert border-yellow-500 bg-yellow-200 text-yellow-900;}
+.alert-warning * {@apply text-yellow-900;}

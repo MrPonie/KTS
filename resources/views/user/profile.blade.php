@@ -11,7 +11,7 @@
         <div class="page-content">
             <div class="flex flex-col gap-4">
                 <!-- User -->
-                <div class="w-full bg-white border border-gray-200 rounded-lg shadow p-4">
+                <div class="panel">
                     <div class="flex gap-2 items-center">
                         <div class="w-8 h-8 bg-gray-500 rounded"></div>
                         <h2>{{ session('username') }}</h2>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="w-full flex gap-4">
                     <!-- User picture change -->
-                    <div class="basis-full h-fit flex flex-col gap-2 bg-white border border-gray-200 rounded-lg shadow p-4">
+                    <div class="basis-full h-fit panel flex flex-col gap-2">
                         <div class="flex gap-2">
                             <div class="w-24 h-24 bg-gray-500 rounded"></div>
                             <form action="update-user-picture" method="post" class="flex flex-col justify-between">
@@ -35,7 +35,10 @@
                         </div>
                     </div>
                     <!-- User password change -->
-                    <div class="basis-full h-fit flex flex-col gap-2 bg-white border border-gray-200 rounded-lg shadow p-4">
+                    <div class="basis-full h-fit panel flex flex-col gap-2">
+                        <div class="border border-yellow-500 bg-yellow-100 text-yellow-900 rounded p-2">
+                            Once changed the user will be signed out
+                        </div>
                         <h2>Change password</h2>
                         <form action="" method="post" class="flex flex-col gap-2">
                             <x-inputs.input_text type="password" name="current_password" label="Current Password"/>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class UserAuthController extends Controller {
     public function login(Request $request) {
@@ -15,24 +16,35 @@ class UserAuthController extends Controller {
         
         $credentials = ['username' => $request->input('username'), 'password' => $request->input('password')];
 
-        if(Auth::attempt($credentials)){
-            // load user role with permissions into session
-            $role_columns = \App\Models\Role::select('name', 'permissions_json')->where('id', Auth::user()->role_id)->first();
-            $role = [
-                'id' => Auth::user()->role_id,
-                'name' => $role_columns->name,
-                'permissions' => json_decode($role_columns->permissions_json),
-            ];
-            $request->session()->forget('role');
-            $request->session()->put('role', $role);
-            // load username to session
-            $request->session()->forget('username');
-            $request->session()->put('username', Auth::user()->username);
+        // check if user exists and is active
+        if(\App\Models\User::where('username', '=', $request->input('username'))->where('is_active', '=', true)->count() != 0) {
 
-            return redirect()->intended('/user');
+            // authenticate user
+            if(Auth::attempt($credentials)){
+                $user = Auth::user();
+                
+                // update last login datetime
+                $user->last_login_at = \Carbon\Carbon::now();
+                $user->save();
+
+                // load user role with permissions into session
+                $role_columns = \App\Models\Role::select('name', 'permissions_json')->where('id', $user->role_id)->first();
+                $role = [
+                    'id' => $user->role_id,
+                    'name' => $role_columns->name,
+                    'permissions' => json_decode($role_columns->permissions_json),
+                ];
+                $request->session()->forget('role');
+                $request->session()->put('role', $role);
+                // load username to session
+                $request->session()->forget('username');
+                $request->session()->put('username', $user->username);
+    
+                return redirect()->intended('/user');
+            }
         }
 
-        return back()->withErrors(['username'=>'Invalid credentials']);
+        return back()->withErrors(['top'=>'Invalid credentials']);
     }
 
     public function logout(Request $request) {
