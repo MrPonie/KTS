@@ -100,7 +100,7 @@ class UserController extends Controller
         ]);
 
         if($validated['password'] !== $validated['retype_password']){
-            return redirect()->back()->withErrors(['retype_password' => 'Passwords did not match.']);
+            return back()->withErrors(['retype_password' => 'Passwords did not match.']);
         }
 
         $user = new \App\Models\User;

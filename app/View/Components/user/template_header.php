@@ -1,28 +1,27 @@
 <?php
 
-namespace App\View\Components\inputs;
+namespace App\View\Components\user;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class text extends Component
+class template_header extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $type='text',
-        public string $label,
-        public string $name,
-        public string $value='',
-    ){}
+        public string $title='',
+        public string $sidebarfocusitem='',
+        public string $sidebarfocussubitem='',
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.inputs.text');
+        return view('components.user.template_header');
     }
 }

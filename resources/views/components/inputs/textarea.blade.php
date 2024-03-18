@@ -2,7 +2,7 @@
     @if (isset($label) && !empty($label))
         <label @isset($name) for="{{ $name }}" @endisset>{{ $label }}</label>
     @endif
-    <input type="{{ $type ?? 'text' }}" @isset($name) id="{{ $name }}" name="{{ $name }}" value="{{ old($name) ?: $value }}" @endisset class="input-text">
+    <textarea @isset($name) name="{{ $name }}" @endisset @isset($id) id="{{ $id }}" @endisset class="input-textarea {{ $class }}" cols="{{ $cols }}" rows="{{ $rows }}">{{ old($name) ?: $value }}</textarea>
     @isset($name)
         @error($name)
             <p class="input-error">{{$message}}</p>

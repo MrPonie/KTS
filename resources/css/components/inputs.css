@@ -1,9 +1,11 @@
-.input {@apply p-1;}
+.input {@apply p-1 rounded border border-gray-200;}
 
 .input-text {@apply input rounded border;}
 
+.input-textarea {@apply input;}
+
 .input-select {
-    @apply input border border-gray-200 rounded;
+    @apply input;
     background-color: rgba(0, 0, 0, 0);
 }
 

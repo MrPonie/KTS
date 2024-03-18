@@ -45,8 +45,8 @@ class sidebar extends Component
             if($permissions->view_users) {
                 $sublist = [];
                 if($permissions->edit_users) {
-                    $sublist[] = ['name'=>'Create new user','link'=>route('users.create_new_user')];
-                    $sublist[] = ['name'=>'Create new group','link'=>route('groups.create_new_group')];
+                    $sublist[] = ['name'=>'Create new user','link'=>route('users.create')];
+                    $sublist[] = ['name'=>'Create new group','link'=>route('groups.create')];
                 }
                 $sublist[] = ['name'=>'Groups','link'=>route('groups')];
                 $this->list[] = ['name'=>'Users','link'=>route('users'),'sublist'=> $sublist ?: null,];

@@ -6,23 +6,26 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class text extends Component
+class textarea extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $type='text',
-        public string $label,
         public string $name,
+        public string $label,
+        public int $rows=2,
+        public int $cols=50,
         public string $value='',
-    ){}
+        public string $id='',
+        public string $class='',
+    ) {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.inputs.text');
+        return view('components.inputs.textarea');
     }
 }

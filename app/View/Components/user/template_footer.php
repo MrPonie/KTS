@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\user;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class navlist_subitem extends Component
+class template_footer extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class navlist_subitem extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.navlist_subitem');
+        return view('components.user.template_footer');
     }
 }

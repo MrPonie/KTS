@@ -1,38 +1,22 @@
-<x-header title="Edit user"/>
+<x-user.template_header title="Edit user"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
-    </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar/>
-        </div>
-        <div class="page-content">
-            @if (session('success'))
-                <x-alert type="success" message="{{ session('success') }}"/>
-            @endif
-            @if (session('error'))
-                <x-alert type="error" message="{{ session('error') }}"/>
-            @endif
-            <div class="panel">
-                <form action="{{ route('users.edit', request()->id) }}" method="post" id="update-user-form" class="flex flex-col gap-4">
-                    @csrf
-                    <div class="flex justify-between border-b border-gray-200 pb-4">
-                        <h1>Editing {{$user->username}}</h1>
-                        <div class="flex gap-2">
-                            <x-button type="link" style="secondary" text="Cancel" link="{{ route('users') }}"/>
-                            <x-button type="button" style="primary-filled" text="Update" id="update-button"/>
-                        </div>
-                    </div>
-                    <x-inputs.checkbox name="is_active" label="Is active" value="active" checked="{{ $user->is_active }}"/>
-                    <x-inputs.select name="role" label="Role" :options="$roles" selected="{{ $user->role_id }}"/>
-                    <x-inputs.text type="password" name="password" label="New Password"/>
-                    <x-inputs.text type="password" name="retype_password" label="Retype New Password"/>
-                </form>
+<x-alerts/>
+
+<div class="panel">
+    <form action="{{ route('users.edit', request()->id) }}" method="post" id="update-user-form" class="flex flex-col gap-4">
+        @csrf
+        <div class="flex justify-between border-b border-gray-200 pb-4">
+            <h1>Editing {{$user->username}}</h1>
+            <div class="flex gap-2">
+                <x-button type="link" style="secondary" text="Cancel" link="{{ route('users') }}"/>
+                <x-button type="button" style="primary-filled" text="Update" id="update-button"/>
             </div>
         </div>
-    </div>
+        <x-inputs.checkbox name="is_active" label="Is active" value="active" checked="{{ $user->is_active }}"/>
+        <x-inputs.select name="role" label="Role" :options="$roles" selected="{{ $user->role_id }}"/>
+        <x-inputs.text type="password" name="password" label="New Password"/>
+        <x-inputs.text type="password" name="retype_password" label="Retype New Password"/>
+    </form>
 </div>
 
 <dialog id="confirm-dialog" class="border border-gray-200 bg-white shadow rounded-lg w-1/2 p-2">
@@ -50,10 +34,10 @@
     </div>
 </dialog>
 
-<x-footer/>
+<x-user.template_footer/>
 
 <script>
-    $(function() {
+    window.onload = function() {
         $('#update-button').on('click', function() {
             let inputs = $('#update-user-form')[0].elements;
             let activeChanged = inputs['is_active'].checked != {{ $user->is_active ? 'true' : 'false' }};
@@ -73,5 +57,5 @@
         $('#dialog-confirm-button').on('click', function() {
             $('#update-user-form').trigger('submit');
         });
-    });
+    };
 </script>

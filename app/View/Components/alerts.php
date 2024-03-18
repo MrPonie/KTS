@@ -6,18 +6,18 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class navlist_item extends Component
+class alerts extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public array $item) {}
+    public function __construct() {}
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.navlist_item');
+        return view('components.alerts');
     }
 }
