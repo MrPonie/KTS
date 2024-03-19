@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\user;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class template_footer extends Component
+class UserSelectList extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class template_footer extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.user.template_footer');
+        return view('components.user-select-list');
     }
 }

@@ -1,4 +1,4 @@
-<x-header :title="'User Login'"/>
+<x-header title="User Login"/>
 
 <div class="relative w-full h-screen">
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3 p-4 rounded-lg bg-white shadow min-w-[400px]">

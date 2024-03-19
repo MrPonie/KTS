@@ -6,22 +6,23 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class template_header extends Component
+class UserButton extends Component
 {
+    public string $sukasukasukasuksasuka;
+
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $title='',
-        public string $sidebarfocusitem='',
-        public string $sidebarfocussubitem='',
-    ) {}
+    public function __construct()
+    {
+        $this->sukasukasukasuksasuka = bin2hex(random_bytes(3));
+    }
 
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.user.template_header');
+        return view('components.user.user-button');
     }
 }

@@ -6,7 +6,7 @@
         @endif
     </div>
     <div class="flex gap-2 p-2">
-        <x-user.user_button/>
+        <x-user.user-button/>
         <x-button style="primary" text="MM" class="md:hidden"/>
     </div>
 </header>

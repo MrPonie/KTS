@@ -1,19 +1,20 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\user;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Alert extends Component
+class TemplateHeader extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $type='info',
-        public string $message='',
+        public string $title='',
+        public string $sidebarfocusitem='',
+        public string $sidebarfocussubitem='',
     ) {}
 
     /**
@@ -21,6 +22,6 @@ class Alert extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.alert');
+        return view('components.user.template-header');
     }
 }

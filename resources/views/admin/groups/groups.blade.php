@@ -1,4 +1,4 @@
-<x-user.template_header title="Groups" sidebarfocusitem="Users" sidebarfocussubitem="Groups"/>
+<x-user.template-header title="Groups" sidebarfocusitem="Users" sidebarfocussubitem="Groups"/>
 
 <x-alerts/>
 
@@ -39,4 +39,4 @@
     </table>
 </div>
 
-<x-user.template_footer/>
+<x-user.template-footer/>

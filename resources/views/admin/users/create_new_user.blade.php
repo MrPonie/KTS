@@ -1,4 +1,4 @@
-<x-user.template_header title="Create new user" sidebarfocusitem="Users" sidebarfocussubitem="Create new user"/>
+<x-user.template-header title="Create new user" sidebarfocusitem="Users" sidebarfocussubitem="Create new user"/>
 
 <x-alerts/>
 <form action="{{ route('users.create') }}" method="post" class="panel flex flex-col gap-4">
@@ -17,4 +17,4 @@
     <x-inputs.checkbox name="is_active" label="Is acttive" value="active"/>
 </form>
 
-<x-user.template_footer/>
+<x-user.template-footer/>

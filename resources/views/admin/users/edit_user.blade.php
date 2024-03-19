@@ -1,4 +1,4 @@
-<x-user.template_header title="Edit user"/>
+<x-user.template-header title="Edit user"/>
 
 <x-alerts/>
 
@@ -34,7 +34,7 @@
     </div>
 </dialog>
 
-<x-user.template_footer/>
+<x-user.template-footer/>
 
 <script>
     window.onload = function() {

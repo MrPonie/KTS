@@ -1,4 +1,4 @@
-<x-user.template_header title="Users" sidebarfocusitem="Users"/>
+<x-user.template-header title="Users" sidebarfocusitem="Users"/>
 
 <x-alerts/>
 
@@ -70,4 +70,4 @@
     </table>
 </div>
 
-<x-user.template_footer/>
+<x-user.template-footer/>

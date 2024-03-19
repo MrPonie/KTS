@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class button extends Component
+class Button extends Component
 {
     public string $buttonClass;
     /**
@@ -18,9 +18,9 @@ class button extends Component
         public string $text='', 
         public string $link='#', 
         public string $leadingIcon='',
-        public string $leadingIconStyle='',
+        public string $leadingIconStyle='regular',
         public string $trailingIcon='',
-        public string $trailingIconStyle='',
+        public string $trailingIconStyle='regular',
         public string $title='',
         public bool $disabled=false, 
         public string $id='',

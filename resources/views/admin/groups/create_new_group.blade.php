@@ -1,6 +1,7 @@
-<x-user.template_header title="Create new group" sidebarfocusitem="Users" sidebarfocussubitem="Create new group"/>
+<x-user.template-header title="Create new group" sidebarfocusitem="Users" sidebarfocussubitem="Create new group"/>
 
 <x-alerts/>
+
 <div class="panel">
     <form action="{{ route('groups.create') }}" method="post" class="flex flex-col gap-4">
         @csrf
@@ -13,7 +14,8 @@
         </div>
         <x-inputs.text type="text" label="Name" name="name"/>
         <x-inputs.textarea label="Description" name="description"/>
+        <x-user-select-list/>
     </form>
 </div>
 
-<x-user.template_footer/>
+<x-user.template-footer/>

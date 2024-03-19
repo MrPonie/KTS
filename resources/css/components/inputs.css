@@ -9,4 +9,8 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
+.input-select-search .select-search-search-input:focus + .select-search-search-results {
+    @apply bg-red-500;
+}
+
 .input-error {@apply text-red-700;}
