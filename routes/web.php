@@ -60,12 +60,12 @@ Route::prefix('user')->group(function() {
         Route::get('/responses', [UserController::class, 'responses'])->name('user.responses')->middleware('permission:view_responses');
 
         // "teacher" role
-        Route::get('/question_bank', [UserController::class, 'question_bank'])->name('user.question_bank')->middleware('permission:has_question_bank');
-        Route::get('/question_bank_topics', [UserController::class, 'question_bank_topics'])->name('user.question_bank_topics')->middleware('permission:has_question_bank');
-        Route::get('/create_new_question', [UserController::class, 'create_new_question_view'])->name('user.create_new_question')->middleware('permission:has_question_bank');
-        Route::post('/create_new_question', [UserController::class, 'create_new_question'])->name('user.create_new_question')->middleware('permission:has_question_bank');
-        Route::get('/create_new_topic', [UserController::class, 'create_new_topic_view'])->name('user.create_new_topic')->middleware('permission:has_question_bank');
-        Route::post('/create_new_topic', [UserController::class, 'create_new_topic'])->name('user.create_new_topic')->middleware('permission:has_question_bank');
+        Route::get('/question_bank', [UserController::class, 'question_bank'])->name('question_bank')->middleware('permission:has_question_bank');
+        Route::get('/question_bank_topics', [UserController::class, 'question_bank_topics'])->name('question_bank.topics')->middleware('permission:has_question_bank');
+        Route::get('/create_new_question', [UserController::class, 'create_new_question_view'])->name('question_bank.create_question')->middleware('permission:has_question_bank');
+        Route::post('/create_new_question', [UserController::class, 'create_new_question'])->name('question_bank.create_question')->middleware('permission:has_question_bank');
+        Route::get('/create_new_topic', [UserController::class, 'create_new_topic_view'])->name('question_bank.create_topic')->middleware('permission:has_question_bank');
+        Route::post('/create_new_topic', [UserController::class, 'create_new_topic'])->name('question_bank.create_topic')->middleware('permission:has_question_bank');
 
         Route::get('/test_form_vault', [UserController::class, 'test_form_vault'])->name('user.test_form_vault')->middleware('permission:has_test_form_vault');
         Route::get('/create_new_test_form', [UserController::class, 'create_new_test_form_view'])->name('user.create_new_test_form')->middleware('permission:has_test_form_vault');

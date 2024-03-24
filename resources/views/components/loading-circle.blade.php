@@ -1,0 +1,1 @@
+<div wire:loading.class="!block" class="loading-circle {{ $class }} hidden"></div>

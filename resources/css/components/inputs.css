@@ -12,5 +12,6 @@
 .input-select-search .select-search-search-input:focus + .select-search-search-results {
     @apply bg-red-500;
 }
+.input-select-search .select-search-option-button {@apply w-full p-2 text-start hover:bg-purple-50;}
 
 .input-error {@apply text-red-700;}

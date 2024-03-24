@@ -7,5 +7,7 @@
 
     <x-vite type="css" resource="resources/css/app.css"/>
     <x-vite type="js" resource="resources/js/app.js"/>
+
+    @livewireStyles
 </head>
 <body class="h-screen bg-gray-100">

@@ -5,11 +5,11 @@
 @endif
 
 @if (!empty($leadingIcon))
-    <span><x-icon icon="{{ $leadingIcon }}" style="{{ $leadingIconStyle }}"/></span>
+    <span><x-icon icon="{{ $leadingIcon }}" style="{{ $leadingIconStyle }}"/>&nbsp;</span>
 @endif
 {{ $text }}
 @if (!empty($trailingIcon))
-    <span><x-icon icon="{{ $trailingIcon }}" style="{{ $trailingIconStyle }}"/></span>
+    <span>&nbsp;<x-icon icon="{{ $trailingIcon }}" style="{{ $trailingIconStyle }}"/></span>
 @endif
 
 @if ($type == 'link')

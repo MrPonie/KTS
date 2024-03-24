@@ -1,4 +1,5 @@
 import './bootstrap.js';
+import './components.js';
 
 $(function(){
 

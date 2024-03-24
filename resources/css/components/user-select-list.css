@@ -1,0 +1,4 @@
+.user-select-list {@apply flex flex-col gap-2;}
+.user-select-list ul li {@apply flex;}
+.user-select-list ul li p {@apply grow px-2 py-1;}
+.user-select-list-list button {@apply button-error;}

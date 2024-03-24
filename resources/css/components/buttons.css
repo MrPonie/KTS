@@ -2,26 +2,81 @@
 
 .btn-normal {@apply text-purple-500;}
 .btn-normal:hover {@apply ring-1 ring-purple-300 ring-inset;}
-.btn-normal:active {@apply bg-purple-300 ;}
+.btn-normal:active {@apply bg-purple-300;}
 
 .button {@apply flex items-center px-2 py-1 rounded duration-75;}
 
-.button-primary {@apply button text-purple-500 hover:bg-purple-200 active:bg-purple-500 active:text-white;}
-.button-primary-outline {@apply button text-purple-500 border border-purple-500 hover:bg-purple-500 hover:text-white;}
+.button-primary {@apply button text-purple-500;}
+.button-primary:disabled {@apply text-purple-400;}
+.button-primary:hover:not(:disabled) {@apply bg-purple-200;}
+.button-primary:active:not(:disabled) {@apply bg-purple-500 text-white;}
+
+.button-primary-outline {@apply button text-purple-500 border border-purple-500;}
+.button-primary-outline:disabled {@apply text-purple-300 border-purple-300;}
+.button-primary-outline:not(:disabled):hover {@apply bg-purple-500 text-white;}
+.button-primary-outline:not(:disabled):active {@apply bg-purple-700;}
+
 .button-primary-filled {@apply button text-white bg-purple-500 hover:bg-purple-700;}
+.button-primary-filled:disabled {@apply bg-purple-400;}
+.button-primary-filled:not(:disabled):hover {@apply bg-purple-700;}
+.button-primary-filled:not(:disabled):active {@apply bg-purple-900;}
 
-.button-secondary {@apply button text-gray-500 hover:bg-gray-200 active:bg-gray-500 active:text-white;}
-.button-secondary-outline {@apply button text-gray-500 border border-gray-500 hover:bg-gray-500 hover:text-white;}
+.button-secondary {@apply button text-gray-500;}
+.button-secondary:disabled {@apply text-gray-400;}
+.button-secondary:hover:not(:disabled) {@apply bg-gray-200;}
+.button-secondary:active:not(:disabled) {@apply bg-gray-500 text-white;}
+
+.button-secondary-outline {@apply button text-gray-500 border border-gray-500;}
+.button-secondary-outline:disabled {@apply text-gray-300 border-gray-300;}
+.button-secondary-outline:not(:disabled):hover {@apply bg-gray-500 text-white;}
+.button-secondary-outline:not(:disabled):active {@apply bg-gray-700;}
+
 .button-secondary-filled {@apply button text-white bg-gray-500 hover:bg-gray-700;}
+.button-secondary-filled:disabled {@apply bg-gray-400;}
+.button-secondary-filled:not(:disabled):hover {@apply bg-gray-700;}
+.button-secondary-filled:not(:disabled):active {@apply bg-gray-900;}
 
-.button-success {@apply button text-green-500 hover:bg-green-200 active:bg-green-500 active:text-white;}
-.button-success-outline {@apply button text-green-500 border border-green-500 hover:bg-green-500 hover:text-white;}
+.button-success {@apply button text-green-500;}
+.button-success:disabled {@apply text-green-400;}
+.button-success:hover:not(:disabled) {@apply bg-green-200;}
+.button-success:active:not(:disabled) {@apply bg-green-500 text-white;}
+
+.button-success-outline {@apply button text-green-500 border border-green-500;}
+.button-success-outline:disabled {@apply text-green-300 border-green-300;}
+.button-success-outline:not(:disabled):hover {@apply bg-green-500 text-white;}
+.button-success-outline:not(:disabled):active {@apply bg-green-700;}
+
 .button-success-filled {@apply button text-white bg-green-500 hover:bg-green-700;}
+.button-success-filled:disabled {@apply bg-green-400;}
+.button-success-filled:not(:disabled):hover {@apply bg-green-700;}
+.button-success-filled:not(:disabled):active {@apply bg-green-900;}
 
-.button-warning {@apply button text-yellow-500 hover:bg-yellow-200 active:bg-yellow-500 active:text-white;}
-.button-warning-outline {@apply button text-yellow-500 border border-yellow-500 hover:bg-yellow-500 hover:text-white;}
+.button-warning {@apply button text-yellow-500;}
+.button-warning:disabled {@apply text-yellow-400;}
+.button-warning:hover:not(:disabled) {@apply bg-yellow-200;}
+.button-warning:active:not(:disabled) {@apply bg-yellow-500 text-white;}
+
+.button-warning-outline {@apply button text-yellow-500 border border-yellow-500;}
+.button-warning-outline:disabled {@apply text-yellow-300 border-yellow-300;}
+.button-warning-outline:not(:disabled):hover {@apply bg-yellow-500 text-white;}
+.button-warning-outline:not(:disabled):active {@apply bg-yellow-700;}
+
 .button-warning-filled {@apply button text-white bg-yellow-500 hover:bg-yellow-700;}
+.button-warning-filled:disabled {@apply bg-yellow-400;}
+.button-warning-filled:not(:disabled):hover {@apply bg-yellow-700;}
+.button-warning-filled:not(:disabled):active {@apply bg-yellow-900;}
 
-.button-error {@apply button text-red-500 hover:bg-red-200 active:bg-red-500 active:text-white;}
-.button-error-outline {@apply button text-red-500 border border-red-500 hover:bg-red-500 hover:text-white;}
+.button-error {@apply button text-red-500;}
+.button-error:disabled {@apply text-red-400;}
+.button-error:hover:not(:disabled) {@apply bg-red-200;}
+.button-error:active:not(:disabled) {@apply bg-red-500 text-white;}
+
+.button-error-outline {@apply button text-red-500 border border-red-500;}
+.button-error-outline:disabled {@apply text-red-300 border-red-300;}
+.button-error-outline:not(:disabled):hover {@apply bg-red-500 text-white;}
+.button-error-outline:not(:disabled):active {@apply bg-red-700;}
+
 .button-error-filled {@apply button text-white bg-red-500 hover:bg-red-700;}
+.button-error-filled:disabled {@apply bg-red-400;}
+.button-error-filled:not(:disabled):hover {@apply bg-red-700;}
+.button-error-filled:not(:disabled):active {@apply bg-red-900;}

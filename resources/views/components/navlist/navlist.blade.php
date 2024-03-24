@@ -1,9 +1,3 @@
-@once
-    @push('scripts')
-        <x-vite type="js" resource="resources/js/components/navlist.js"/>
-    @endpush
-@endonce
-
 <div class="flex flex-col">
     @foreach ($list as $item)
         <div class="navlist-item-container {{ $focusitem == Arr::get($item, 'name') && !empty($focussubitem) ? 'expanded' : '' }}">

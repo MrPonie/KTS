@@ -24,10 +24,10 @@ class Sidebar extends Component
             }
 
             if($permissions->has_question_bank){
-                $this->list[] = ['name'=>'Question Bank','link'=>route('user.question_bank'),'sublist'=>[
-                    ['name'=>'Topics','link'=>route('user.question_bank_topics')],
-                    ['name'=>'Create new question','link'=>route('user.create_new_question')],
-                    ['name'=>'Create new topic','link'=>route('user.create_new_topic')],
+                $this->list[] = ['name'=>'Question Bank','link'=>route('question_bank'),'sublist'=>[
+                    ['name'=>'Topics','link'=>route('question_bank.topics')],
+                    ['name'=>'Create new question','link'=>route('question_bank.create_question')],
+                    ['name'=>'Create new topic','link'=>route('question_bank.create_topic')],
                 ]];
             }
             if($permissions->has_test_form_vault) {

@@ -1,17 +1,16 @@
-<x-header title="Create new question"/>
+<x-user.template-header title="Create new question" sidebarfocusitem="Question Bank" sidebarfocussubitem="Create new question"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
-    </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Question Bank" focussubitem="Create new question"/>
-        </div>
-        <div class="page-content">
-            
+<x-alerts/>
+
+<form action="{{ route('question_bank.create_question') }}" method="post" class="panel flex flex-col gap-2">
+    <div class="flex justify-between pb-2 border-b border-gray-200">
+        <h1>New Question</h1>
+        <div class="flex gap-2">
+            <x-button type="link" style="secondary" text="Cancel" link="{{ route('question_bank') }}"/>
+            <x-button type="submit" style="primary-filled" text="Create"/>
         </div>
     </div>
-</div>
+    <livewire:question-builder/>
+</form>
 
-<x-footer/>
+<x-user.template-footer/>

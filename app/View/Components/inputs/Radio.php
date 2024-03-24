@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SelectSearch extends Component
+class Radio extends Component
 {
     /**
      * Create a new component instance.
@@ -14,8 +14,8 @@ class SelectSearch extends Component
     public function __construct(
         public string $name='',
         public string $label='',
-        public string $id='',
         public string $class='',
+        public string $id='',
     ) {}
 
     /**
@@ -23,6 +23,6 @@ class SelectSearch extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.inputs.select-search');
+        return view('components.inputs.radio');
     }
 }
