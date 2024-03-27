@@ -11,6 +11,8 @@ class QuestionSingleSelect extends Component
     public string $question = '';
     public array $options = [];
 
+    public string $question_input = '';
+
     public function get_option_index_by_id($id) {
         foreach($this->options as $index=>$option) {
             if($option['id'] == $id) {
@@ -75,6 +77,14 @@ class QuestionSingleSelect extends Component
 
     public function render()
     {
+        $question_input_arr = [];
+        foreach($this->options as $option) {
+            $question_input_arr[] = [
+                'id' => $option['id'],
+                'text' => $option['text'],
+            ];
+        }
+        $this->question_input = json_encode($question_input_arr);
         return view('livewire.question-single-select');
     }
 }

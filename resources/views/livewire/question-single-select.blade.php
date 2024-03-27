@@ -1,7 +1,8 @@
 <div class="flex-down">
-    @foreach ($options as $option)
-        @dump($option)
-    @endforeach
+    <input type="hidden" name="question-input" value="{{ $question_input }}">
+    @error('question-input')
+        <p class="input-error">{{$message}}</p>
+    @enderror
     <x-inputs.textarea name="question" label="Question" value="{{ $question }}"/>
     <label>Options</label>
     <div class="flex-down p-2 border border-gray-200 rounded">
@@ -29,6 +30,9 @@
                 </div>
             @endforeach
         </div>
+        @error('answer')
+            <p class="input-error">{{$message}}</p>
+        @enderror
         <button type="button" wire:click="add()" class="button-secondary flex justify-center">
             <span><x-icon icon="plus"/></span> Add
         </button>
