@@ -15,6 +15,7 @@
     <x-inputs.text type="password" label="Retype password" name="retype_password"/>
     <x-inputs.select label="Role" name="role" :options="$roles"/>
     <x-inputs.checkbox name="is_active" label="Is acttive" value="active"/>
+    <livewire:model-list model="Group" searchcolumn="name" name="groups" label="Groups"/>
 </form>
 
 <x-user.template-footer/>

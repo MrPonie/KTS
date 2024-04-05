@@ -11,6 +11,7 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Description</th>
                 <th>Assigned</th>
                 <th>Created at</th>
                 <th>Updated at</th>
@@ -18,18 +19,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quam in maiores. Impedit repudiandae iste minima corporis ab accusantium nobis omnis, fugit beatae natus voluptatibus nesciunt temporibus aut inventore sapiente!</td>
-                <td>69</td>
-                <td>2024-03-24 14:52</td>
-                <td>2024-03-24 14:52</td>
-                <td>
-                    <div class="flex gap-1">
-                        <x-button style="primary" leadingIcon="pen-to-square"/>
-                        <x-button style="error" leadingIcon="x"/>
-                    </div>
-                </td>
-            </tr>
+            @foreach ($topics as $topic)
+                <tr>
+                    <td>{{ $topic->name }}</td>
+                    <td>{{ $topic->description }}</td>
+                    <td>{{ $topic->question_count }}</td>
+                    <td>{{ $topic->created_at }}</td>
+                    <td>{{ $topic->updated_at }}</td>
+                    <td>
+                        <div class="flex gap-1">
+                            <x-button type="link" link="{{ route('question_bank.edit_topic', $topic->id) }}" style="primary" leadingIcon="pen-to-square"/>
+                            <x-button type="link" link="{{ route('question_bank.create_topic', $topic->id) }}" style="error" leadingIcon="x"/>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

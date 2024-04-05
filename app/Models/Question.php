@@ -17,6 +17,10 @@ class Question extends Model
      */
     protected $fillable = [
         'created_by',
+        'type',
+        'evaluable',
+        'points',
+        'question',
         'body_json',
         'input_json',
         'answer_json',
@@ -31,6 +35,10 @@ class Question extends Model
     protected $casts = [
         'id' => 'integer',
         'created_by' => 'integer',
+        'type' => 'integer',
+        'evaluable' => 'boolean',
+        'points' => 'integer',
+        'question' => 'string',
         'body_json' => 'array',
         'input_json' => 'array',
         'answer_json' => 'array',

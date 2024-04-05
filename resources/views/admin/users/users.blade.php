@@ -40,7 +40,7 @@
                                 <span class="text-red-500">Inactive</span>
                             @endif
                         </td>
-                        <td>{{ date('Y-m-d', $user->last_login_at) }}</td>
+                        <td>{{ $user->last_login_at }}</td>
                         <td>{{ $user->created_by }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>

@@ -12,6 +12,8 @@
             <tr>
                 <th>Question</th>
                 <th>Type</th>
+                <th>Evaluable</th>
+                <th>Points</th>
                 <th>Topics</th>
                 <th>Created at</th>
                 <th>Updated at</th>
@@ -21,17 +23,18 @@
         <tbody>
             @foreach ($questions as $index=>$question)
                 <tr>
-                    <td>{{ $question->body_json }}</td>
+                    <td>{{ $question->question }}</td>
                     <td>
-                        @switch(0)
+                        @switch($question->type)
                             @case(0) Single select @break
                             @case(1) Multi-select @break
                             @case(1) Text input @break
                             @default Unknown
                         @endswitch
                     </td>
+                    <td>{{ $question->evaluable ? 'Yes' : 'No' }}</td>
+                    <td>{{ $question->points }}</td>
                     <td>
-
                         <div class="flex flex-wrap gap-1">
                             @if (!$question_topics[$index]->isEmpty())
                                 @foreach ($question_topics[$index] as $topic)
@@ -46,8 +49,12 @@
                     <td>{{ $question->updated_at }}</td>
                     <td>
                         <div class="flex gap-1">
-                            <x-button style="primary" leadingIcon="pen-to-square"/>
-                            <x-button style="error" leadingIcon="x"/>
+                            <x-button type="link" link="{{ route('question_bank.edit_question', $question->id) }}" style="primary" leadingIcon="pen-to-square"/>
+                            <form action="{{ route('question_bank.delete_question') }}" method="post" onsubmit="if(!confirm('Permanently delete the question?')){return false;}">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $question->id }}">
+                                <x-button type="submit" style="error" leadingIcon="x"/>
+                            </form>
                         </div>
                     </td>
                 </tr>

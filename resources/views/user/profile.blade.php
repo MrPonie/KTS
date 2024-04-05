@@ -14,24 +14,32 @@
     </div>
     <div class="w-full flex gap-4">
         <!-- User picture change -->
-        <div class="basis-full h-fit panel flex flex-col gap-2">
-            <div class="flex gap-2">
-                <div class="w-24 h-24 bg-gray-500 rounded"></div>
-                <form action="update-user-picture" method="post" class="flex flex-col justify-between">
-                    <input type="file" name="" id="">
-                    <div class="flex">
-                        <x-button type="submit" text="Update"/>
-                    </div>
-                </form>
+        <div class="basis-full flex flex-col gap-4">
+            <div class="panel flex-down">
+                <div class="flex gap-2">
+                    <div class="w-24 h-24 bg-gray-500 rounded"></div>
+                    <form action="update-user-picture" method="post" class="flex flex-col justify-between">
+                        <input type="file" name="" id="">
+                        <div class="flex">
+                            <x-button type="submit" text="Update"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel flex-down">
+                <h2>Groups</h2>
+                @foreach ($groups as $group)
+                    <p>{{ $group->name }}</p>
+                @endforeach
             </div>
         </div>
         <!-- User password change -->
-        <div class="basis-full h-fit panel flex flex-col gap-2">
+        <div class="basis-full h-fit panel flex flex-down">
             <div class="border border-yellow-500 bg-yellow-100 text-yellow-900 rounded p-2">
                 Once changed the user will be signed out
             </div>
             <h2>Change password</h2>
-            <form action="" method="post" class="flex flex-col gap-2">
+            <form action="" method="post" class="flex flex-down">
                 <x-inputs.text type="password" name="current_password" label="Current Password"/>
                 <x-inputs.text type="password" name="new_password" label="New Password"/>
                 <x-inputs.text type="password" name="retype_password" label="Retype Password"/>

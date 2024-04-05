@@ -15,6 +15,7 @@
                 <th class="text-start">User count</th>
                 <th class="text-start">Created by</th>
                 <th class="text-start">Created at</th>
+                <th class="text-start">Updated at</th>
                 <th class="text-start">Action</th>
             </tr>
         </thead>
@@ -27,6 +28,7 @@
                         <td>{{ $group->user_count }}</td>
                         <td>{{ $group->created_by }}</td>
                         <td>{{ $group->created_at }}</td>
+                        <td>{{ $group->updated_at }}</td>
                         <td>
                             <div class="flex gap-2">
                                 <x-button type="link" style="primary" leadingIcon="pen-to-square" title="Edit group" link="{{ route('groups.edit', $group->id) }}"/>

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users');
             $table->integer('type')->unsigned();
-            $table->json('body_json');
+            $table->boolean('evaluable')->default(false);
+            $table->integer('points')->unsigned()->default(0);
+            $table->string('question');
+            $table->json('body_json')->nullable();
             $table->json('input_json');
             $table->json('answer_json');
             $table->json('resources_json');

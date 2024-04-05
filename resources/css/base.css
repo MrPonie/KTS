@@ -11,4 +11,4 @@
 .table thead {@apply border-b border-gray-500;}
 .table thead th {@apply text-start;}
 .table tbody tr {@apply border-b border-gray-200;}
-.table tbody td {@apply overflow-hidden text-ellipsis whitespace-nowrap max-w-0;}
+.table tbody td {@apply break-normal max-w-0;}

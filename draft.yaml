@@ -16,10 +16,6 @@ models:
     last_login_at: timestamp
     is_online: boolean default:0
 
-  # Role_User_Relation:
-  #   role_id: id foreign
-  #   user_id: id user
-
   Group_User_Relation:
     group_id: id foreign
     user_id: id foreign

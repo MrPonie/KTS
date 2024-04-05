@@ -2,6 +2,8 @@
 
 <x-alerts/>
 
+@dump(session('debug'))
+
 <form action="{{ route('question_bank.create_question') }}" method="post" class="panel flex flex-col gap-2">
     @csrf
     <div class="flex justify-between pb-2 border-b border-gray-200">
@@ -12,6 +14,7 @@
         </div>
     </div>
     <livewire:question-builder/>
+    <livewire:model-list model="Topic" searchcolumn="name" name="topics" label="Topics"/>
 </form>
 
 <x-user.template-footer/>

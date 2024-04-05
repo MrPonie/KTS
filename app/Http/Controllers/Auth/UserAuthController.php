@@ -25,6 +25,7 @@ class UserAuthController extends Controller {
                 
                 // update last login datetime
                 $user->last_login_at = \Carbon\Carbon::now();
+                $user->is_online = true;
                 $user->save();
 
                 // load user role with permissions into session
@@ -48,6 +49,9 @@ class UserAuthController extends Controller {
     }
 
     public function logout(Request $request) {
+        $user = Auth::user();
+        $user->is_online = false;
+        $user->save();
         Auth::logout();
         $request->session()->flush();
         return redirect('/user/login');

@@ -14,7 +14,7 @@
         </div>
         <x-inputs.text type="text" label="Name" name="name"/>
         <x-inputs.textarea label="Description" name="description"/>
-        <x-user-select-list/>
+        <livewire:model-list model="User" searchcolumn="username" name="users" label="Users"/>
     </form>
 </div>
 

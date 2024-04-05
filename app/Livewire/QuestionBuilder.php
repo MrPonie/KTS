@@ -12,15 +12,26 @@ class QuestionBuilder extends Component
         2 => 'Text area',
         3 => 'File',
     ];
-    public int $type=0;
-    public bool $evaluate_response = false;
+    public ?\App\Models\Question $question = null;
+    
+    public ?int $type = null;
+    public ?bool $evaluable = null;
 
     public function check_response_change($checked) {
-        $this->evaluate_response = $checked;
+        $this->evaluable = $checked;
     }
 
     public function render()
     {
-        return view('livewire.question-builder');
+        if($this->type == null) {
+            $this->type = old('type') ?: ($this->question ? $this->question->type : 0);
+        }
+        if($this->evaluable == null) {
+            $this->evaluable = old('evaluable') ? true : ($this->question ? $this->question->evaluable : false);
+        }
+        return view('livewire.question-builder', [
+            'evaluable' => $this->evaluable,
+            'points' => old('points') ?: ($this->question ? $this->question->points : 0),
+        ]);
     }
 }

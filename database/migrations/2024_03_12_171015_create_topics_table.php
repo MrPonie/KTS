@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users');
             $table->string('name');
-            $table->string('description');
-            $table->unsignedInteger('question_count');
+            $table->longText('description');
             $table->timestamps();
         });
 

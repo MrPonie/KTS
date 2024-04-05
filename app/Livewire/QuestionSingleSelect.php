@@ -8,34 +8,25 @@ class QuestionSingleSelect extends Component
 {
     public bool $edit = false;
     public bool $showanswer = false;
-    public string $question = '';
-    public array $options = [];
+    public ?\App\Models\Question $question = null;
 
-    public string $question_input = '';
+    public ?array $options = null; // [ [ 'id'=>integer, 'text'=>string, 'checked'=>boolean ], ... ]
 
-    public function get_option_index_by_id($id) {
-        foreach($this->options as $index=>$option) {
-            if($option['id'] == $id) {
-                return $index;
-            }
-        }
-        return null;
+    public function option_name_changed($index, $value) {
+        $this->options[$index]['text'] = $value;
     }
 
-    public function option_name_changed($id, $value) {
-        $index = $this->get_option_index_by_id($id);
-        if($index !== null) {
-            $this->options[$index]['text'] = $value;
-        }
-    }
-
-    public function option_check_changed($id) {
-        foreach($this->options as $index=>&$option) {
-            $option['checked'] = $option['id'] == $id;
+    public function option_check_changed($index) {
+        foreach($this->options as $i=>&$option) {
+            $option['checked'] = $i == $index;
         }
     }
 
     public function add() {
+        if(!$this->options) {
+            $this->options = [];
+        }
+
         $next_index = 0;
         foreach($this->options as &$option){
             if($option['id'] > $next_index){
@@ -50,15 +41,13 @@ class QuestionSingleSelect extends Component
         ];
     }
 
-    public function remove($id) {
-        $index = $this->get_option_index_by_id($id);
+    public function remove($index) {
         if($index !== null) {
             array_splice($this->options, $index, 1);
         }
     }
 
-    public function up($id) {
-        $index = $this->get_option_index_by_id($id);
+    public function up($index) {
         if($index > 0) {
             $prev = $this->options[$index-1];
             $this->options[$index-1] = $this->options[$index];
@@ -66,8 +55,7 @@ class QuestionSingleSelect extends Component
         }
     }
 
-    public function down($id) {
-        $index = $this->get_option_index_by_id($id);
+    public function down($index) {
         if($index+1 < count($this->options)) {
             $prev = $this->options[$index+1];
             $this->options[$index+1] = $this->options[$index];
@@ -77,6 +65,22 @@ class QuestionSingleSelect extends Component
 
     public function render()
     {
+        if(!$this->options) {
+            $this->options = [];
+            if($this->question) {
+                $options = json_decode($this->question->input_json);
+                $answers = json_decode($this->question->answer_json);
+                $answer = !is_array($answers) && !is_object($answers) ? $answers : null;
+                foreach($options as $option) {
+                    $this->options[] = [
+                        'id' => $option->id,
+                        'text' => $option->text,
+                        'checked' => $this->showanswer ? $answer == $option->id : false,
+                    ];
+                }
+            }
+        }
+
         $question_input_arr = [];
         foreach($this->options as $option) {
             $question_input_arr[] = [
@@ -84,7 +88,10 @@ class QuestionSingleSelect extends Component
                 'text' => $option['text'],
             ];
         }
-        $this->question_input = json_encode($question_input_arr);
-        return view('livewire.question-single-select');
+        
+        return view('livewire.question-single-select', [
+            'question_name' => old('question') ?: ($this->question ? $this->question->question : ''),
+            'question_input' => json_encode($question_input_arr)
+        ]);
     }
 }
