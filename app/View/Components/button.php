@@ -21,10 +21,8 @@ class Button extends Component
         public string $leadingIconStyle='regular',
         public string $trailingIcon='',
         public string $trailingIconStyle='regular',
-        public string $title='',
-        public bool $disabled=false, 
-        public string $id='',
-        public string $class='') {
+        public bool $disabled=false
+        ) {
         $this->buttonClass = match($style) {
             'primary' => 'button-primary',
             'primary-outline' => 'button-primary-outline',

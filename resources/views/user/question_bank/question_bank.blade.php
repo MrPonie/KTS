@@ -2,11 +2,24 @@
 
 <x-alerts/>
 
-<div class="panel">
+<div class="panel flex-down">
     <div class="w-full flex justify-between">
         <h1>Questions</h1>
         <x-button type="link" style="primary-filled" text="New Question" link="{{ route('question_bank.create_question') }}"/>
     </div>
+    <form action="" method="get" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-2">
+        <div class="w-full flex gap-4">
+            <x-inputs.select name="type" class="w-full" :options="$types" :selected="$filter_type"/>
+            <div class="w-full flex gap-1">
+                <x-inputs.select name="topic" class="w-full" :options="$topics" :selected="$filter_topic"/>
+                <x-button type="submit" style="primary-filled" text="Filter"/>
+            </div>
+        </div>
+        <div class="w-full flex gap-1">
+            <x-inputs.text class="basis-full" name="search" value="{{ Request::input('search') }}"/>
+            <x-button type="submit" style="primary-filled" text="Search"/>
+        </div>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -28,7 +41,7 @@
                         @switch($question->type)
                             @case(0) Single select @break
                             @case(1) Multi-select @break
-                            @case(1) Text input @break
+                            @case(2) Text area @break
                             @default Unknown
                         @endswitch
                     </td>

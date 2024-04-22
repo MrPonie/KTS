@@ -1,17 +1,60 @@
-<x-header title="Test List"/>
+<x-user.template-header title="Test List" sidebarfocusitem="Test List"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
+<x-alerts/>
+
+<div class="panel flex-down">
+    <div class="flex justify-between">
+        <h1>Test List</h1>
+        <x-button type="link" style="primary-filled" text="Create" link="{{ route('test_list.create') }}"/>
     </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Test List"/>
-        </div>
-        <div class="page-content">
-            
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Is active</th>
+                <th>Users assigned</th>
+                <th>Question count</th>
+                <th>Max Points</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($tests as $test)
+                <tr>
+                    <td>{{ $test->name }}</td>
+                    <td>
+                        @if ($test->is_active)
+                            <span class="text-green-500">Active</span>
+                        @else
+                            <span class="text-red-500">Inactive</span>
+                        @endif
+                    </td>
+                    <td>{{ $test->user_count }}</td>
+                    <td>{{ $test->question_count }}</td>
+                    <td>{{ $test->max_points }}</td>
+                    <td>{{ $test->created_at }}</td>
+                    <td>{{ $test->updated_at }}</td>
+                    <td>
+                        <div class="flex gap-1">
+                            @if ($test->is_active)
+                                <form action="{{ route('test_list.stop', $test->id) }}" method="post">
+                                    @csrf
+                                    <x-button type="submit" style="error" leadingIcon="ban" leadingIconStyle="solid"/>
+                                </form>
+                            @else
+                                <form action="{{ route('test_list.start', $test->id) }}" method="post">
+                                    @csrf
+                                    <x-button type="submit" style="success" leadingIcon="circle"/>
+                                </form>
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
-<x-footer/>
+<x-user.template-footer/>

@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class TopicController extends Controller
 {
+    public function topics() {
+        $topics = \App\Models\Topic::select('topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'users.username as user', DB::raw('count(topic__questions.question_id) as question_count'))
+            ->leftJoin('users', 'users.id', '=', 'topics.created_by')
+            ->leftJoin('topic__questions', 'topic__questions.topic_id', '=', 'topics.id')
+            ->groupBy('topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'user')
+            ->get();
+        return view('admin/topics', ['topics'=>$topics]);
+    }
+
     public function question_bank_topics() {
         $topics = \App\Models\Topic::select('topics.*', DB::raw('count(topic__questions.id) as question_count'))
             ->leftJoin('topic__questions', 'topic__questions.topic_id', '=', 'topics.id')

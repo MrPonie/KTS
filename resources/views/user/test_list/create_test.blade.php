@@ -1,17 +1,19 @@
-<x-header title="Create test"/>
+<x-user.template-header title="Create test" sidebarfocusitem="Test List" sidebarfocussubitem="Create new test"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
-    </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Test List" focussubitem="Create new test"/>
-        </div>
-        <div class="page-content">
-            
-        </div>
-    </div>
-</div>
+<x-alerts/>
 
-<x-footer/>
+<form action="{{ route('test_list.create') }}" method="post" class="panel flex-down">
+    @csrf
+    <div class="flex justify-between items-center">
+        <h1>Creating a test</h1>
+        <div class="flex gap-2">
+            <x-button type="link" style="secondary" text="Cancel" link="{{ route('test_list') }}"/>
+            <x-button type="submit" style="primary-filled" text="Submit"/>
+        </div>
+    </div>
+    <livewire:test-builder/>
+    <livewire:model-list model="Group" searchcolumn="name" name="groups" label="Assign to groups"/>
+    <livewire:grading-list/>
+</form>
+
+<x-user.template-footer/>

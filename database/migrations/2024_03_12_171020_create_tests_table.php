@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users');
             $table->string('name');
+            $table->boolean('is_active');
             $table->json('content_json');
             $table->unsignedInteger('question_count');
             $table->float('max_points', 8, 2);

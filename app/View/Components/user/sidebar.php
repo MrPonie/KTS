@@ -31,14 +31,14 @@ class Sidebar extends Component
                 ]];
             }
             if($permissions->has_test_form_vault) {
-                $this->list[] = ['name'=>'Test Form Vault','link'=>route('user.test_form_vault'),'sublist'=>[
-                    ['name'=>'Create new test form','link'=>route('user.create_new_test_form')],
-                    ['name'=>'Export test form','link'=>route('user.export_test_form')],
+                $this->list[] = ['name'=>'Test Form Vault','link'=>route('test_form_vault'),'sublist'=>[
+                    ['name'=>'Create new test form','link'=>route('test_form_vault.create')],
+                    ['name'=>'Export test form','link'=>route('test_form_vault.export_view')],
                 ]];
             }
             if($permissions->has_tests_list) {
-                $this->list[] = ['name'=>'Test List','link'=>route('user.test_list'),'sublist'=>[
-                    ['name'=>'Create new test','link'=>route('user.create_test')],
+                $this->list[] = ['name'=>'Test List','link'=>route('test_list'),'sublist'=>[
+                    ['name'=>'Create new test','link'=>route('test_list.create')],
                 ]];
             }
 
@@ -52,18 +52,18 @@ class Sidebar extends Component
                 $this->list[] = ['name'=>'Users','link'=>route('users'),'sublist'=> $sublist ?: null,];
             }
             if($permissions->view_questions) {
-                $this->list[] = ['name'=>'Questions','link'=>route('user.questions'),'sublist'=>[
-                    ['name'=>'All topics','link'=>route('user.topics')],
+                $this->list[] = ['name'=>'Questions','link'=>route('questions'),'sublist'=>[
+                    ['name'=>'All topics','link'=>route('topics')],
                 ]];
             }
             if($permissions->view_test_forms) {
-                $this->list[] = ['name'=>'Test Forms','link'=>route('user.test_forms')];
+                $this->list[] = ['name'=>'Test Forms','link'=>route('test_forms')];
             }
             if($permissions->view_tests) {
-                $this->list[] = ['name'=>'Tests','link'=>route('user.tests')];
+                $this->list[] = ['name'=>'Tests','link'=>route('tests')];
             }
             if($permissions->view_responses) {
-                $this->list[] = ['name'=>'Responses','link'=>route('user.responses')];
+                $this->list[] = ['name'=>'Responses','link'=>route('responses')];
             }
         }
     }

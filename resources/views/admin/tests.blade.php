@@ -1,17 +1,12 @@
-<x-header title="Tests"/>
+<x-user.template-header title="Test list" sidebarfocusitem="Test List"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
-    </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Tests"/>
-        </div>
-        <div class="page-content">
-            
-        </div>
+<x-alerts/>
+
+<div class="panel flex-down">
+    <div class="flex justify-between items-center">
+        <h1>Test List</h1>
+        <x-button type="link" style="primary-filled" text="Create new" link="{{ route('') }}"/>
     </div>
 </div>
 
-<x-footer/>
+<x-user.template-footer/>

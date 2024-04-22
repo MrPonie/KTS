@@ -7,11 +7,54 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
-    public function question_bank() {
-        $questions = \App\Models\Question::select('questions.*')->get();
+    public function questions() {
+        $questions = \App\Models\Question::select('questions.id', 'questions.type', 'questions.evaluable', 'questions.points', 'questions.question', 'questions.created_at', 'questions.updated_at', 'users.username as user')
+            ->leftJoin('users', 'users.id', '=', 'questions.created_by')
+            ->get();
+        $question_topics = [];
+        foreach($questions as $question) {
+            $question_topics[] = \App\Models\Topic::select('name')
+                ->leftJoin('topic__questions', 'topic__questions.topic_id', '=', 'topics.id')
+                ->where('topic__questions.question_id', '=', $question->id)
+                ->get();
+        }
+        return view('admin/questions', ['questions'=>$questions, 'topics'=>$question_topics]);
+    }
+
+    public function question_bank(Request $request) {
+        // filter
+        $types = [
+            '' => 'None',
+            0 => 'Single select', 
+            1 => 'Multi-select', 
+            2 => 'Text area', 
+            3 => 'File'
+        ];
+        $topics = ['' => 'None'];
+        $orm_topics = \App\Models\Topic::select('id', 'name')->where('created_by', '=', Auth::id())->get();
+        foreach($orm_topics as $topic) {
+            $topics[$topic->id] = $topic->name;
+        }
+        $filter_type = '';
+        if($request->input('type') != null) {$filter_type = $request->input('type');}
+        $filter_topic = '';
+        if($request->input('topic') != null) {$filter_topic = $request->input('topic');}
+        // getting filtered questions
+        $questions = \App\Models\Question::select('questions.*')->where('questions.created_by', '=', Auth::id());
+        if($filter_type != '') {
+            $questions = $questions->where('questions.type', '=', $filter_type);
+        }
+        if($filter_topic != '') {
+            $questions = $questions->leftJoin('topic__questions', 'topic__questions.question_id', '=', 'questions.id')->where('topic__questions.topic_id', '=', $filter_topic);
+        }
+        if($request->input('search') != '') {
+            $questions = $questions->where('questions.question', 'like', '%'.$request->input('search').'%');
+        }
+        $questions = $questions->get();
         $question_topics = [];
         foreach($questions as $question) {
             $question_topics[] = \App\Models\Topic::select('topics.name')
@@ -20,7 +63,14 @@ class QuestionController extends Controller
                 ->where('questions.id', '=', $question->id)
                 ->get();
         }
-        return view('user/question_bank/question_bank', ['questions' => $questions, 'question_topics' => $question_topics]);
+        return view('user/question_bank/question_bank', [
+            'questions' => $questions,
+            'question_topics' => $question_topics, 
+            'types' => $types, 
+            'topics' => $topics,
+            'filter_type' => $filter_type,
+            'filter_topic' => $filter_topic,
+        ]);
     }
     
     public function create_view() {return view('user/question_bank/create_new_question');}
@@ -31,12 +81,12 @@ class QuestionController extends Controller
             'evaluable' => 'sometimes',
             'points' => 'sometimes|integer',
             'question' => 'required|string',
-            'question-input' => 'required|string',
+            'question-input' => 'sometimes|string',
             'answer' => 'sometimes',
             'topics' => 'sometimes|array',
         ]);
         // return back()->with('debug', $request->all());
-        if(empty(json_decode($validated['question-input']))) {
+        if(isset($validated['question-input']) && empty(json_decode($validated['question-input']))) {
             return back()->with('error', 'Question input/options/answer was empty.');
         }
 
@@ -49,14 +99,14 @@ class QuestionController extends Controller
             'created_by' => Auth::id(),
             'type' => intval($validated['type']),
             'evaluable' => isset($validated['has_correct_answer']),
+            'points' => isset($validated['points']) ? $validated['points'] : 0,
             'question' => $validated['question'],
-            'input_json' => $validated['question-input'],
+            'input_json' => isset($validated['question-input']) ? $validated['question-input'] : '',
             'answer_json' => is_string($answer) ? $answer : json_encode($answer),
             'resources_json' => '[]',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ];
-        if(isset($validated['points'])) {$cols['points'] = $validated['points'];}
         $question = \App\Models\Question::create($cols);
         
         if(!$question->save()) {

@@ -2,7 +2,7 @@
 
 <x-alerts/>
 
-@dump(session('debug'))
+{{-- @dump(session('debug')) --}}
 
 <form action="{{ route('question_bank.create_question') }}" method="post" class="panel flex flex-col gap-2">
     @csrf

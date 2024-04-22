@@ -1,8 +1,8 @@
-<div class="flex flex-col gap-1">
-    @if (isset($label) && !empty($label))
+<div {{ $attributes->class(['flex flex-col gap-1']) }} >
+    @if (!empty($label))
         <label @isset($name) for="{{ $name }}" @endisset>{{ $label }}</label>
     @endif
-    <select @isset($name) id="{{ $name }}" name="{{ $name }}" value="" @endisset class="input-select">
+    <select @if(!empty($name)) id="{{ $name }}" name="{{ $name }}" value="" @endif class="input-select">
         <option value hidden>Select</option>
         @foreach ($options as $value=>$name)
             <option value="{{ $value }}" @selected($selected == $value)>{{ $name }}</option>

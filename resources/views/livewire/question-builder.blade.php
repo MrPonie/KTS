@@ -29,8 +29,16 @@
             @break
         @case(2)
             <div class="flex-down">
-                <x-inputs.textarea name="question" label="Question"/>
-                <x-inputs.textarea name="answer" label="Answer text"/>
+                <x-inputs.textarea name="question" label="Question" :value="$question ? $question->question : ''"/>
+                @php
+                    $answer = '';
+                    if($question) {
+                        $answer = json_decode($question->answer_json);
+                        if(is_array($answer) || is_object($answer)) {$answer = '';}
+                        if(!$answer) {$answer = $question->answer_json;}
+                    }
+                @endphp
+                <x-inputs.textarea name="answer" label="Answer text" :value="$answer"/>
             </div>
             @break
         @case(3)

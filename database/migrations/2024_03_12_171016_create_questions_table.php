@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('type')->unsigned();
             $table->boolean('evaluable')->default(false);
             $table->integer('points')->unsigned()->default(0);
-            $table->string('question');
+            $table->longText('question');
             $table->json('body_json')->nullable();
             $table->json('input_json');
             $table->json('answer_json');

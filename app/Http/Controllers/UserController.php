@@ -23,12 +23,16 @@ class UserController extends Controller
 
     public function users() {
         $users = DB::table('users as u')
-            ->select(DB::raw('u.id, u.username, r.name, u.is_online, u.is_active, u.last_login_at, u1.username as created_by, u.created_at, u.updated_at'))
+            ->select(DB::raw('u.id, u.username, u.role_id, r.name, u.is_online, u.is_active, u.last_login_at, u1.username as created_by, u.created_at, u.updated_at'))
             ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
             ->leftJoin('users as u1', 'u.created_by', '=', 'u1.id')
             ->get();
         
         return view('admin/users/users')->with(['users'=>$users]);
+    }
+
+    public function assign_view(Request $request, int $id) {
+        return view('admin/users/assign_users');
     }
 
     public function change_user_active_status(Request $request, bool $status) {
@@ -158,11 +162,6 @@ class UserController extends Controller
 
         return back()->with('success', 'New user created!');
     }
-
-    public function questions() {return view('admin/questions');}
-    public function topics() {return view('admin/topics');}
-
-    public function test_forms() {return view('admin/test_forms');}
 
     public function tests() {return view('admin/tests');}
 

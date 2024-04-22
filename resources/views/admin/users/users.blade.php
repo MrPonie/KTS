@@ -60,6 +60,13 @@
                                             <x-button type="submit" style="success" leadingIcon="circle" title="Activate user"/>
                                         </form>
                                     @endif
+                                    @if ($user->role_id == 2)
+                                        <form action="{{ route('users.assign_view', $user->id) }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $user->id }}">
+                                            <x-button type="submit" style="primary" leadingIcon="person" leadingIconStyle="solid" title="View assigned users"/>
+                                        </form>
+                                    @endif
                                 @endif
                             </div> 
                         </td>

@@ -1,17 +1,52 @@
-<x-header title="Test forms"/>
+<x-user.template-header title="Test forms" sidebarfocusitem="Test Forms"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
+<x-alerts/>
+
+<div class="panel flex-down">
+    <div class="w-full flex justify-between">
+        <h1>Test forms</h1>
     </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Test Forms"/>
-        </div>
-        <div class="page-content">
-            
-        </div>
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Created by</th>
+                <th>Description</th>
+                <th>Question count</th>
+                <th>Max points</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($forms as $form)
+                <tr>
+                    <td>{{ $form->name }}</td>
+                    <td>{{ $form->user }}</td>
+                    <td>{{ $form->description }}</td>
+                    <td>{{ $form->question_count }}</td>
+                    <td>{{ $form->max_points }}</td>
+                    <td>{{ $form->created_at }}</td>
+                    <td>{{ $form->updated_at }}</td>
+                    <td>
+                        <div class="flex gap-1 items-center">
+                            <form action="" method="post">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $form->id }}">
+                                <x-button type="submit" style="primary" leadingIcon="eye"/>
+                            </form>
+                            <form action="" method="post" onsubmit="if(!confirm('Are you sure you want to delete this question?')) {return false;}">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $form->id }}">
+                                <x-button type="submit" style="error" leadingIcon="x"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
-<x-footer/>
+<x-user.template-footer/>

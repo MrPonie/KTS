@@ -1,17 +1,20 @@
-<x-header title="Create new test form"/>
+<x-user.template-header title="Create new test form" sidebarfocusitem="Test Form Vault" sidebarfocussubitem="Create new test form"/>
 
-<div class="flex flex-col w-full h-full">
-    <div class="w-full">
-        <x-user.header/>
-    </div>
-    <div class="page-container">
-        <div class="page-sidebar">
-            <x-user.sidebar focusitem="Test Form Vault" focussubitem="Create new test form"/>
-        </div>
-        <div class="page-content">
-            
-        </div>
-    </div>
-</div>
+<x-alerts/>
 
-<x-footer/>
+<form action="{{ route('test_form_vault.create') }}" method="post" class="panel flex-down">
+    @csrf
+    <div class="flex justify-between pb-2 border-b border-gray-200">
+        <h1>New Test Form</h1>
+        <div class="flex gap-2">
+            <x-button type="link" style="secondary" text="Cancel" link="{{ route('question_bank') }}"/>
+            <x-button type="submit" style="primary-filled" text="Create" id="submit-button"/>
+        </div>
+    </div>
+    <x-inputs.text name="title" label="Title"/>
+    <x-inputs.textarea name="description" label="Description"/>
+    <h2>Questions</h2>
+    <livewire:test-form-builder/>
+</form>
+
+<x-user.template-footer/>
