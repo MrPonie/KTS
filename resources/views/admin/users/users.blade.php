@@ -2,16 +2,28 @@
 
 <x-alerts/>
 
-<div class="panel">
+<div class="panel flex-down">
     <div class="w-full flex justify-between">
         <h1>Users</h1>
         <x-button type="link" style="primary-filled" text="Create new User" link="{{ route('users.create') }}"/>
     </div>
+    <form action="" method="get" class="flex gap-2">
+        <x-inputs.select name="role" label="Role" :options="[null=>'None',1=>'Administrator',2=>'Teacher',3=>'Student']" selected="{{ Request::input('role') }}" class="w-full"/>
+        <x-inputs.select name="group" label="Group" :options="$all_groups" selected="{{ Request::input('group') }}" class="w-full"/>
+        <x-inputs.select name="by" label="Created by" :options="$admins" selected="{{ Request::input('by') }}" class="w-full"/>
+        <x-inputs.select name="active" label="Is active" :options="[null=>'None', true=>'Active', false=>'Inactive']" selected="{{ Request::input('active') }}" class="w-full"/>
+        <x-inputs.text type="search" name="search" label="Search" value="{{ Request::input('search') }}"/>
+        <x-button type="submit" style="primary-filled" text="Filter"/>
+    </form>
+</div>
+
+<div class="panel">
     <table class="table">
         <thead>
             <tr>
                 <th class="text-start">Username</th>
                 <th class="text-start">Role</th>
+                <th class="text-start">Groups</th>
                 <th class="text-start">Online</th>
                 <th class="text-start">Active</th>
                 <th class="text-start">Last login</th>
@@ -22,10 +34,19 @@
         </thead>
         <tbody>
             @if ($users = $users)
-                @foreach ($users as $user)
+                @foreach ($users as $index=>$user)
                     <tr>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->name }}</td>
+                        <td>
+                            @if ($user_groups = $groups[$index])
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach ($user_groups as $group)
+                                        <span class="bg-gray-200 rounded p-1">{{ $group }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </td>
                         <td>
                             @if ($user->is_online)
                                 <span class="text-green-500">Online</span>
@@ -58,13 +79,6 @@
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $user->id }}">
                                             <x-button type="submit" style="success" leadingIcon="circle" title="Activate user"/>
-                                        </form>
-                                    @endif
-                                    @if ($user->role_id == 2)
-                                        <form action="{{ route('users.assign_view', $user->id) }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $user->id }}">
-                                            <x-button type="submit" style="primary" leadingIcon="person" leadingIconStyle="solid" title="View assigned users"/>
                                         </form>
                                     @endif
                                 @endif

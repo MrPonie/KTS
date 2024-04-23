@@ -6,11 +6,19 @@
     <div class="w-full flex justify-between">
         <h1>Topics</h1>
     </div>
+    <form action="" method="get" class="flex gap-2">
+        <x-inputs.select name="by" label="Created by" :options="$teachers" selected="{{ Request::input('by') }}" class="w-full"/>
+        <x-inputs.text type="search" name="search" label="Search" value="{{ Request::input('search') }}" class="w-full"/>
+        <x-button type="submit" style="primary-filled" text="Filter"/>
+    </form>
+</div>
+
+<div class="panel flex-down">
     <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Craeted by</th>
+                <th>Created by</th>
                 <th>Desctiption</th>
                 <th>Question count</th>
                 <th>Created at</th>

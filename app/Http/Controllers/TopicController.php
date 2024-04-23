@@ -9,13 +9,21 @@ use Illuminate\Support\Facades\DB;
 
 class TopicController extends Controller
 {
-    public function topics() {
+    public function topics(Request $request) {
         $topics = \App\Models\Topic::select('topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'users.username as user', DB::raw('count(topic__questions.question_id) as question_count'))
             ->leftJoin('users', 'users.id', '=', 'topics.created_by')
             ->leftJoin('topic__questions', 'topic__questions.topic_id', '=', 'topics.id')
-            ->groupBy('topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'user')
-            ->get();
-        return view('admin/topics', ['topics'=>$topics]);
+            ->groupBy('topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'user');
+        // filters
+        if($request->input('by')) $topics = $topics->where('topics.created_by', '=', $request->input('by'));
+        if($request->input('search')) $topics = $topics->where('topics.name', 'like', '%'.$request->input('search').'%');
+        // get filtered topics
+        $topics = $topics->get();
+
+        $teachers = [null=>'None'];
+        foreach(\App\Models\User::select('id', 'username')->where('role_id', '=', 2)->get() as $user) $teachers[$user->id] = $user->username;
+
+        return view('admin/topics', ['topics'=>$topics, 'teachers'=>$teachers]);
     }
 
     public function question_bank_topics() {

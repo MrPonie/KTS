@@ -6,6 +6,16 @@
     <div class="w-full flex justify-between">
         <h1>Questions</h1>
     </div>
+    <form action="" method="get" class="flex gap-2">
+        <x-inputs.select name="type" label="Type" :options="[null=>'None',0=>'Single select',1=>'Multi-select',2=>'Text area']" selected="{{ Request::input('type') }}" class="w-full"/>
+        <x-inputs.select name="topic" label="Topic" :options="$all_topics" selected="{{ Request::input('topic') }}" class="w-full"/>
+        <x-inputs.select name="by" label="Created by" :options="$teachers" selected="{{ Request::input('by') }}" class="w-full"/>
+        <x-inputs.text type="search" name="search" label="Search" value="{{ Request::input('search') }}"/>
+        <x-button type="submit" style="primary-filled" text="Filter"/>
+    </form>
+</div>
+
+<div class="panel flex-down">
     <table class="table">
         <thead>
             <tr>

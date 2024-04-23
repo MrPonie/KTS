@@ -9,11 +9,19 @@ use Illuminate\Support\Facades\DB;
 
 class TestFormController extends Controller
 {
-    public function test_forms() {
+    public function test_forms(Request $request) {
         $forms = \App\Models\Test_Form::select('test__forms.id', 'test__forms.name', 'test__forms.description', 'test__forms.question_count', 'test__forms.max_points', 'test__forms.created_at', 'test__forms.updated_at', 'users.username as user')
-            ->leftJoin('users', 'users.id', '=', 'test__forms.created_by')
-            ->get();
-        return view('admin/test_forms', ['forms'=>$forms]);
+            ->leftJoin('users', 'users.id', '=', 'test__forms.created_by');
+        // filters
+        if($request->input('by') !== null) $forms = $forms->where('test__forms.created_by', '=', $request->input('by'));
+        if($request->input('search') !== null) $forms = $forms->where('test__forms.name', 'like', '%'.$request->input('search').'%');
+        // get filtered forms
+        $forms = $forms->get();
+
+        $teachers = [null=>'None'];
+        foreach(\App\Models\User::select('id', 'username')->where('role_id', '=', 2)->get() as $user) $teachers[$user->id] = $user->username;
+
+        return view('admin/test_forms', ['forms'=>$forms, 'teachers'=>$teachers]);
     }
 
     public function vault(Request $request) {

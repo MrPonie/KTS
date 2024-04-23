@@ -9,10 +9,26 @@ use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
+    public function tests(Request $request) {
+        $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'users.username as user')
+            ->leftJoin('users', 'users.id', '=', 'tests.created_by');
+        // filters
+        if($request->input('by') !== null) $tests = $tests->where('tests.created_by', '=', $request->input('by'));
+        if($request->input('active') !== null) $tests = $tests->where('tests.is_active', '=', $request->input('active'));
+        if($request->input('search') !== null) $tests = $tests->where('tests.name', 'like', '%'.$request->input('search').'%');
+        // get filtered tests
+        $tests = $tests->get();
+
+        $teachers = [null=>'None'];
+        foreach(\App\Models\User::select('id', 'username')->where('role_id', '=', 2)->get() as $user) $teachers[$user->id] = $user->username;
+
+        return view('admin/tests', ['tests'=>$tests, 'teachers'=>$teachers]);
+    }
+
     public function list() {
         $tests = \App\Models\Test::select('tests.*', DB::raw('count(test__users.user_id) as user_count'))
             ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
-            ->groupBy('tests.id', 'tests.created_by', 'tests.name', 'tests.is_active', 'tests.content_json', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'tests.updated_at')
+            ->groupBy('tests.id', 'tests.created_by', 'tests.name', 'tests.is_active', 'tests.content_json', 'tests.grading_json', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'tests.updated_at')
             ->get();
         return view('user/test_list/test_list', ['tests'=>$tests]);
     }
@@ -43,6 +59,7 @@ class TestController extends Controller
         $test->name = $form->name;
         $test->is_active = false;
         $test->content_json = $form->questions_json;
+        $test->grading_json = $form->grading_json;
         $test->question_count = $form->question_count;
         $test->max_points = $form->max_points;
         $test->created_at = \Carbon\Carbon::now();

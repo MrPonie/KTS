@@ -21,18 +21,39 @@ class UserController extends Controller
 
     public function login() {return view('user/login');}
 
-    public function users() {
+    public function users(Request $request) {
         $users = DB::table('users as u')
             ->select(DB::raw('u.id, u.username, u.role_id, r.name, u.is_online, u.is_active, u.last_login_at, u1.username as created_by, u.created_at, u.updated_at'))
             ->leftJoin('roles as r', 'u.role_id', '=', 'r.id')
             ->leftJoin('users as u1', 'u.created_by', '=', 'u1.id')
-            ->get();
-        
-        return view('admin/users/users')->with(['users'=>$users]);
-    }
+            ->leftJoin('group__users as gu', 'gu.user_id', '=', 'u.id');
+        // filters
+        if($request->input('role') !== null) $users = $users->where('u.role_id', '=', $request->input('role'));
+        if($request->input('group') !== null) $users = $users->where('gu.group_id', '=', $request->input('group'));
+        if($request->input('by') !== null) $users = $users->where('u.created_by', '=', $request->input('by'));
+        if($request->input('active') !== null) $users = $users->where('u.is_active', '=', $request->input('active'));
+        if($request->input('search') !== null) $users = $users->where('u.username', 'like', '%'.$request->input('search').'%');
+        // get filtered users
+        $users = $users->get();
 
-    public function assign_view(Request $request, int $id) {
-        return view('admin/users/assign_users');
+        $groups = [];
+        foreach($users as $user) {
+            $user_groups = \App\Models\Group_User::select('groups.name')
+                ->leftJoin('groups', 'groups.id', '=', 'group__users.group_id')
+                ->where('group__users.user_id', '=', $user->id)
+                ->get();
+            $g = [];
+            foreach($user_groups as $ug) $g[] = $ug->name;
+            $groups[] = $g;
+        }
+
+        $all_groups = [null=>'None'];
+        foreach(\App\Models\Group::select('id', 'name')->get() as $group) $all_groups[$group->id] = $group->name;
+
+        $admins = [null=>'None'];
+        foreach(\App\Models\User::select('id', 'username')->where('role_id', '=', 1)->get() as $user) $admins[$user->id] = $user->username;
+
+        return view('admin/users/users')->with(['users'=>$users, 'groups'=>$groups, 'all_groups'=>$all_groups, 'admins'=>$admins]);
     }
 
     public function change_user_active_status(Request $request, bool $status) {

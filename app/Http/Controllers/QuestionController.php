@@ -11,10 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
-    public function questions() {
+    public function questions(Request $request) {
         $questions = \App\Models\Question::select('questions.id', 'questions.type', 'questions.evaluable', 'questions.points', 'questions.question', 'questions.created_at', 'questions.updated_at', 'users.username as user')
             ->leftJoin('users', 'users.id', '=', 'questions.created_by')
-            ->get();
+            ->leftJoin('topic__questions', 'topic__questions.question_id', '=', 'questions.id');
+        // filters
+        if($request->input('type') !== null) $questions = $questions->where('questions.type', '=', $request->input('type'));
+        if($request->input('topic') !== null) $questions = $questions->where('topic__questions.topic_id', '=', $request->input('topic'));
+        if($request->input('by') !== null) $questions = $questions->where('questions.created_by', '=', $request->input('by'));
+        if($request->input('search') !== null) $questions = $questions->where('questions.question', 'like', '%'.$request->input('search').'%');
+        // get filtered questions
+        $questions = $questions->get();
+
         $question_topics = [];
         foreach($questions as $question) {
             $question_topics[] = \App\Models\Topic::select('name')
@@ -22,7 +30,14 @@ class QuestionController extends Controller
                 ->where('topic__questions.question_id', '=', $question->id)
                 ->get();
         }
-        return view('admin/questions', ['questions'=>$questions, 'topics'=>$question_topics]);
+
+        $all_topics = [null=>'None'];
+        foreach(\App\Models\Topic::select('id', 'name')->get() as $topic) $all_topics[$topic->id] = $topic->name;
+
+        $teachers = [null=>'None'];
+        foreach(\App\Models\User::select('id', 'username')->where('role_id', '=', 2)->get() as $user) $teachers[$user->id] = $user->username;
+
+        return view('admin/questions', ['questions'=>$questions, 'topics'=>$question_topics, 'all_topics'=>$all_topics, 'teachers'=>$teachers]);
     }
 
     public function question_bank(Request $request) {

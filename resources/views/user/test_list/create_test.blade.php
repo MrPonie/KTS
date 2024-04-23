@@ -13,6 +13,7 @@
     </div>
     <livewire:test-builder/>
     <livewire:model-list model="Group" searchcolumn="name" name="groups" label="Assign to groups"/>
+    <livewire:model-list model="User" searchcolumn="username" name="users" label="Assign to select users" :filter="[['column'=>'role_id', 'operator'=>'=', 'value'=>3]]"/>
     <livewire:grading-list/>
 </form>
 

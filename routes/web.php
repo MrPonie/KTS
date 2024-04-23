@@ -45,8 +45,6 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/create', [UserController::class, 'create'])->name('users.create');
         Route::post('/activate_user', [UserController::class, 'change_user_active_status'])->defaults('status', true)->name('users.activate');
         Route::post('/deactivate_user', [UserController::class, 'change_user_active_status'])->defaults('status', false)->name('users.deactivate');
-        Route::post('/assigned/{id}', [UserController::class, 'assign_view'])->name('users.assign_view');
-        Route::post('/assign/{id}', [UserController::class, 'assign'])->name('users.assign');
         Route::get('/edit/{id}', [UserController::class, 'edit_view'])->name('users.edit');
         Route::post('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
     })->middleware('permission:edit_users');
@@ -64,7 +62,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/test_forms', [TestFormController::class, 'test_forms'])->name('test_forms')->middleware('permission:view_test_forms');
 
-    Route::get('/tests', [UserController::class, 'tests'])->name('tests')->middleware('permission:view_tests');
+    Route::get('/tests', [TestController::class, 'tests'])->name('tests')->middleware('permission:view_tests');
 
     Route::get('/responses', [UserController::class, 'responses'])->name('responses')->middleware('permission:view_responses');
 
