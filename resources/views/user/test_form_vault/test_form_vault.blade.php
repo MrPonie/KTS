@@ -13,6 +13,9 @@
         </form>
         <x-button type="link" style="primary-filled" text="New" link="{{ route('test_form_vault.create') }}"/>
     </div>
+</div>
+
+<div class="panel flex-down">
     <table class="table">
         <thead>
             <th>Title</th>

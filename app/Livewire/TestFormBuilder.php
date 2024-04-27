@@ -91,14 +91,15 @@ class TestFormBuilder extends Component
 
         if(empty($this->questions) && $this->formID !== null) {
             $form = \App\Models\Test_Form::find($this->formID);
-            $fq = json_decode($form->questions_json);
+            $fq = $form->questions_json;
             foreach($fq as $q) {
-                $kurwa = (object)[];
-                $kurwa->uid = bin2hex(random_bytes(4));
-                $kurwa->topic = null;
-                $kurwa->id = $q->id;
-                $kurwa->data = [];
-                $this->questions[] = $kurwa;
+                $q = (object)$q;
+                $item = (object)[];
+                $item->uid = bin2hex(random_bytes(4));
+                $item->topic = $q->topic;
+                $item->id = $q->id;
+                $item->data = [];
+                $this->questions[] = $item;
             }
         }
 
@@ -120,7 +121,7 @@ class TestFormBuilder extends Component
                     $selected_question = \App\Models\Question::find($question->id);
                     $question->data['question'] = $selected_question->question;
                     $question->data['evaluable'] = $selected_question->evaluable;
-                    $question->data['points'] = isset($question->data['points']) && $selected_question->evaluable ? $selected_question->points : 0;
+                    $question->data['points'] = $selected_question->evaluable ? $selected_question->points : 0;
                     $question->data['type'] = $selected_question->type;
                     $question->data['input_json'] = $selected_question->input_json;
 
@@ -128,6 +129,15 @@ class TestFormBuilder extends Component
             }
         }
 
+        // calculate current form max points
+        $max_points = 0;
+        foreach($this->questions as $question) {
+            if(array_key_exists('points', $question->data)){
+                $max_points += $question->data['points'];
+            }
+        }
+
+        // create a new questions json that will be sent on submit
         $form_questions = [];
         foreach($this->questions as $question) {
             $form_questions[] = (object)['topic' => $question->topic, 'id' => $question->id, 'points' => array_key_exists('points', $question->data) ? $question->data['points'] : 0];
@@ -137,7 +147,7 @@ class TestFormBuilder extends Component
         return view('livewire.test-form-builder', [
             'topics' => $topics_arr,
             'form_questions' => $form_questions,
-            'kurwa' => $this->questions,
+            'max_points' => $max_points,
         ]);
     }
 }

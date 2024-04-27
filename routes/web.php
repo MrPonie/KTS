@@ -101,9 +101,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/stop/{id}', [TestController::class, 'stop'])->name('test_list.stop');
     })->middleware('permission:has_tests_list');
 
-    // Route::get('/test_list', [UserController::class, 'test_list'])->name('user.test_list')->middleware('permission:has_tests_list');
-    // Route::get('/create_test', [UserController::class, 'create_test_view'])->name('user.create_test')->middleware('permission:has_tests_list');
-    // Route::post('/create_test', [UserController::class, 'create_test'])->name('user.create_test')->middleware('permission:has_tests_list');
+    Route::get('/student_groups', [GroupController::class, 'student_groups'])->name('student_groups');
 
     // "student" role
     Route::get('/assigned_tests', [UserController::class, 'assigned_tests'])->name('user.assigned_tests')->middleware('permission:can_receive_tests');

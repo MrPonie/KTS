@@ -26,11 +26,15 @@ class TopicController extends Controller
         return view('admin/topics', ['topics'=>$topics, 'teachers'=>$teachers]);
     }
 
-    public function question_bank_topics() {
+    public function question_bank_topics(Request $request) {
         $topics = \App\Models\Topic::select('topics.*', DB::raw('count(topic__questions.id) as question_count'))
             ->leftJoin('topic__questions', 'topic__questions.topic_id', '=', 'topics.id')
             ->groupBy('topics.id', 'topics.name', 'topics.description', 'topics.created_at', 'topics.updated_at', 'topics.created_by')
-            ->where('topics.created_by', '=', Auth::id())->get();
+            ->where('topics.created_by', '=', Auth::id());
+        // filters
+        if($request->input('search')) $topics = $topics->where('topics.name', 'like', '%'.$request->input('search').'%');
+        // get filtered topics
+        $topics = $topics->get();
         return view('user/question_bank/question_bank_topics', ['topics'=>$topics]);
     }
 

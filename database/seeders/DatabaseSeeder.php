@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
                     'has_question_bank' => false,
                     'has_test_form_vault' => false,
                     'has_tests_list' => false,
+                    'view_groups' => false,
                     'can_receive_tests' => false,
                 ]),
             ]);
@@ -63,6 +64,7 @@ class DatabaseSeeder extends Seeder
                     'has_question_bank' => true,
                     'has_test_form_vault' => true,
                     'has_tests_list' => true,
+                    'view_groups' => true,
                     'can_receive_tests' => false,
                 ]),
             ]);
@@ -87,6 +89,7 @@ class DatabaseSeeder extends Seeder
                     'has_question_bank' => false,
                     'has_test_form_vault' => false,
                     'has_tests_list' => false,
+                    'view_groups' => false,
                     'can_receive_tests' => true,
                 ]),
             ]);

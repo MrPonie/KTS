@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('created_by')->constrained('users');
+            $table->integer('test_form_id')->unsigned();
             $table->string('name');
             $table->boolean('is_active');
             $table->json('content_json');

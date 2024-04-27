@@ -1,5 +1,6 @@
 <?php $rnd = 'fq'.bin2hex(random_bytes(3));?>
 <div class="flex-down">
+    <p>Max points: {{ $max_points }}</p>
     <x-inputs.text type="hidden" name="questions" value="{{ $form_questions }}"/>
     <div class="questions-container">
         @foreach ($questions as $question)
@@ -8,8 +9,8 @@
                     <div class="flex gap-2">
                         <x-inputs.select wire:change="topic_selected('{{ $question->uid }}', $event.target.value)" label="Topic" class="flex-grow" :options="$topics" selected="{{ $question->topic }}"/>
                         <x-inputs.select wire:change="question_selected('{{ $question->uid }}', $event.target.value)" label="Question" class="flex-grow" :options="isset($question->data['question_options']) ? $question->data['question_options'] : []" selected="{{ $question->id }}"/>
-                        {{-- <x-inputs.text wire:change="points_changed('{{ $question->uid }}', $event.target.value)" type="number" label="Custom points" value="{{ $question->id ? $question->data['points'] : ''}}" :disabled="array_key_exists('evaluable', $question->data) ? !$question->data['evaluable'] : true"/> --}}
-                        <x-inputs.text wire:change="points_changed('{{ $question->uid }}', $event.target.value)" type="number" label="Custom points" value="{{ $question->id ? $question->data['points'] : ''}}" :disabled="true"/>
+                        {{-- <x-inputs.text wire:change="points_changed('{{ $question->uid }}', $event.target.value)" type="number" label="Points" value="{{ $question->id ? $question->data['points'] : ''}}" :disabled="array_key_exists('evaluable', $question->data) ? !$question->data['evaluable'] : true"/> --}}
+                        <x-inputs.text wire:change="points_changed('{{ $question->uid }}', $event.target.value)" type="number" label="Points" value="{{ $question->id ? $question->data['points'] : ''}}" :disabled="true"/>
                     </div>
                     <label>Preview</label>
                     <div class="flex-down border border-gray-200 rounded p-2">

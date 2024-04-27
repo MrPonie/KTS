@@ -2,8 +2,9 @@
 
 <x-alerts/>
 
-<form action="{{ route('test_form_vault.create') }}" method="post" class="panel flex-down">
+<form action="{{ route('test_form_vault.edit', $form->id) }}" method="post" class="panel flex-down">
     @csrf
+    <input type="hidden" name="id" value="{{ $form->id }}">
     <div class="flex justify-between pb-2 border-b border-gray-200">
         <h1>Editing {{ $form->name }}</h1>
         <div class="flex gap-2">
@@ -14,7 +15,7 @@
     <x-inputs.text name="title" label="Title" value="{{ $form->name }}"/>
     <x-inputs.textarea name="description" label="Description" value="{{ $form->description }}"/>
     <h2>Questions</h2>
-    <livewire:test-form-builder :formID="1"/>
+    <livewire:test-form-builder :formID="$form->id"/>
 </form>
 
 <x-user.template-footer/>

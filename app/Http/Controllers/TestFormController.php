@@ -69,7 +69,7 @@ class TestFormController extends Controller
         $form->created_by = Auth::id();
         $form->name = $validated['title'];
         $form->description = isset($validated['description']) ? (is_string($validated['description']) ? $validated['description'] : '') : '';
-        $form->questions_json = json_encode($question_arr);
+        $form->questions_json = $question_arr;
         $form->question_count = count($question_arr);
         $form->max_points = $max_points;
         $form->created_at = \Carbon\Carbon::now();
@@ -88,7 +88,51 @@ class TestFormController extends Controller
     }
 
     public function edit(Request $request) {
-        return back()->with('error', 'todo');
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'title' => 'required|string',
+            'description' => 'sometimes',
+            'questions' => 'required|string',
+        ]);
+
+        $question_arr = [];
+        $max_points = 0;
+
+        $questions = json_decode(htmlspecialchars_decode($validated['questions']));
+        if($questions) {
+            foreach($questions as $question) {
+                $record = \App\Models\Question::find($question->id);
+                $item = (object)[];
+                $item->id = $question->id;
+                $item->topic = $question->topic;
+                $item->type = $record->type;
+                $item->evaluable = $record->evaluable;
+                $item->points = $question->points;
+                $item->question = $record->question;
+                $item->input_json = $record->input_json;
+                $item->answer_json = $record->answer_json;
+                $question_arr[] = $item;
+                $max_points += $record->points;
+            }
+        }else{
+            return back()->with('error', 'Failed to get test form questions.');
+        }
+
+        $form = \App\Models\Test_Form::find($validated['id']);
+        if(!$form) return back()->with('error', 'Failed to find Test Form of ID.');
+        $form->created_by = Auth::id();
+        $form->name = $validated['title'];
+        $form->description = isset($validated['description']) ? (is_string($validated['description']) ? $validated['description'] : '') : '';
+        $form->questions_json = $question_arr;
+        $form->question_count = count($question_arr);
+        $form->max_points = $max_points;
+        $form->updated_at = \Carbon\Carbon::now();
+
+        if($form->save()) {
+            return back()->with('success', 'Successfuly updated the Test Form!');
+        }
+
+        return back()->with('error', 'Failed to update the Test Form.');
     }
 
     public function export_view() {return view('user/test_form_vault/export_test_form');}

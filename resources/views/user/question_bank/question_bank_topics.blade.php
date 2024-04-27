@@ -2,11 +2,20 @@
 
 <x-alerts/>
 
-<div class="panel">
-    <div class="w-full flex justify-between">
-        <h1>Topics</h1>
-        <x-button type="link" style="primary-filled" text="New Topic" link="{{ route('question_bank.create_topic') }}"/>
+<div class="panel flex-down">
+    <div class="w-full flex justify-between items-center gap-2">
+        <h1 class="w-full">Topics</h1>
+        <form action="" method="get" class="w-full">
+            <div class="w-full flex gap-1">
+                <x-inputs.text class="basis-full" name="search" value="{{ Request::input('search') }}"/>
+                <x-button type="submit" style="primary-filled" text="Search"/>
+            </div>
+        </form>
+        <x-button type="link" style="primary-filled" text="New" link="{{ route('question_bank.create_topic') }}"/>
     </div>
+</div>
+
+<div class="panel">
     <table class="table">
         <thead>
             <tr>

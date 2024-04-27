@@ -25,11 +25,15 @@ class TestController extends Controller
         return view('admin/tests', ['tests'=>$tests, 'teachers'=>$teachers]);
     }
 
-    public function list() {
+    public function list(Request $request) {
         $tests = \App\Models\Test::select('tests.*', DB::raw('count(test__users.user_id) as user_count'))
             ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
-            ->groupBy('tests.id', 'tests.created_by', 'tests.name', 'tests.is_active', 'tests.content_json', 'tests.grading_json', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'tests.updated_at')
-            ->get();
+            ->groupBy('tests.id', 'tests.created_by', 'tests.test_form_id', 'tests.name', 'tests.is_active', 'tests.content_json', 'tests.grading_json', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'tests.updated_at');
+        // filters
+        if($request->input('active') !== null) $tests = $tests->where('tests.is_active', '=', $request->input('active'));
+        if($request->input('search') !== null) $tests = $tests->where('tests.name', 'like', '%'.$request->input('search').'%');
+        // get filtered tests
+        $tests = $tests->get();
         return view('user/test_list/test_list', ['tests'=>$tests]);
     }
 
@@ -54,22 +58,13 @@ class TestController extends Controller
         $form = \App\Models\Test_Form::find($validated['form']);
         if(!$form) return back()->with('error', 'Failed to find selected test form.');
 
-        $test = new \App\Models\Test;
-        $test->created_by = Auth::id();
-        $test->name = $form->name;
-        $test->is_active = false;
-        $test->content_json = $form->questions_json;
-        $test->grading_json = $form->grading_json;
-        $test->question_count = $form->question_count;
-        $test->max_points = $form->max_points;
-        $test->created_at = \Carbon\Carbon::now();
-        $test->updated_at = \Carbon\Carbon::now();
-
         $cols = [
             'created_by' => Auth::id(),
+            'test_form_id' => $form->id,
             'name' => $form->name,
             'is_active' => false,
             'content_json' => $form->questions_json,
+            'grading_json' => $validated['grading'],
             'question_count' => $form->question_count,
             'max_points' => $form->max_points,
             'created_at' => \Carbon\Carbon::now(),

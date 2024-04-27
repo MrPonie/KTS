@@ -3,16 +3,134 @@
 <x-alerts/>
 
 <div class="grid grid-cols-4 gap-4">
-    @for ($i=0; $i < 10; $i++)
-        <div class="flex flex-col gap-2 p-2 bg-white border border-gray-200 shadow rounded">
-            <h2>stat title</h2>
-            <div class="w-full h-[150px] flex justify-center">
-                <svg viewBox="0 0 500 100" class="chart">
-                    <polyline fill="none" stroke="#0074d9" stroke-width="2" points=" 00,120 20,60 40,80 60,20 80,80 100,80 120,60 140,100 160,90 180,80 200, 110 220, 10 240, 70 260, 100 280, 100 300, 40 320, 0 340, 100 360, 100 380, 120 400, 60 420, 70 440, 80 "/>
-                </svg>
+    @if (has_permission('can_receive_tests'))
+        <x-dashboard-panel title="Assigned tests">
+            <div class="grid grid-cols-2">
+                <div class="">
+                    <p>Total</p>
+                    <p>{{ $assigned_tests }}</p>
+                </div>
+                <div class="">
+                    <p>Answered</p>
+                    <p>{{ $answered_assigned_tests }}</p>
+                </div>
             </div>
-        </div>
-    @endfor
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('has_question_bank'))
+        <x-dashboard-panel title="Question bank">
+            <div class="grid grid-cols-2">
+                <div class="">
+                    <p class="text-center text-xl">Questions</p>
+                    <p class="text-center text-5xl text-black">{{ $question_bank_questions }}</p>
+                </div>
+                <div class="">
+                    <p class="text-center text-xl">Topics</p>
+                    <p class="text-center text-5xl text-black">{{ $question_bank_topics }}</p>
+                </div>
+            </div>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('has_test_form_vault'))
+        <x-dashboard-panel title="Test form vault">
+            <div class="grid grid-cols-2">
+                <div class="">
+                    <p class="text-center text-xl">Test forms</p>
+                    <p class="text-center text-5xl text-black">{{ $test_form_vault_forms }}</p>
+                </div>
+                <div class="">
+                    <p class="text-center text-xl">Test forms used</p>
+                    <p class="text-center text-5xl text-black">{{ $test_form_vault_forms_used }}</p>
+                </div>
+            </div>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('has_tests_list'))
+        <x-dashboard-panel title="Tests list">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $test_list_tests }}</p>
+            <div class="grid grid-cols-2">
+                <div class="flex flex-col items-center">
+                    <p>Active</p>
+                    <p class="text-green-500 text-5xl">{{ $test_list_active }}</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p>Inactive</p>
+                    <p class="text-red-500 text-5xl">{{ $test_list_inactive }}</p>
+                </div>
+            </div>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('view_users'))
+        <x-dashboard-panel title="Users">
+            <div class="flex-down">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><p>Online</p></td>
+                            <td class="pl-2 w-full">
+                                <div class="flex items-center gap-1">
+                                    <div class="bg-purple-500 h-4 rounded" style="width: {{ $users_online / ($users?:1) * 100 }}%;"></div>
+                                    {{ $users_online }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Active</p></td>
+                            <td class="pl-2 w-full">
+                                <div class="flex items-center gap-1">
+                                    <div class="bg-green-500 h-4 rounded" style="width: {{ $users_active / ($users?:1) * 100 }}%;"></div>
+                                    {{ $users_active }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Inactive</p></td>
+                            <td class="pl-2 w-full">
+                                <div class="flex items-center gap-1">
+                                    <div class="bg-red-500 h-4 rounded" style="width: {{ $users_inactive / ($users?:1) * 100 }}%;"></div>
+                                    {{ $users_inactive }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><p>Total</p></td>
+                            <td class="pl-2">{{ $users }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('view_questions'))
+        <x-dashboard-panel title="Questions">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $questions }}</p>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('view_test_forms'))
+        <x-dashboard-panel title="Test forms">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $test_forms }}</p>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('view_tests'))
+        <x-dashboard-panel title="Tests">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $tests }}</p>
+            <div class="grid grid-cols-2">
+                <div class="flex flex-col items-center">
+                    <p>Active</p>
+                    <p class="text-green-500 text-5xl">{{ $test_active }}</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p>Inactive</p>
+                    <p class="text-red-500 text-5xl">{{ $test_inactive }}</p>
+                </div>
+            </div>
+        </x-dashboard-panel>
+    @endif
+    @if (has_permission('view_responses'))
+        <x-dashboard-panel title="Responses">
+
+        </x-dashboard-panel>
+    @endif
 </div>
 
 <x-user.template-footer/>

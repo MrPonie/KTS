@@ -7,6 +7,14 @@
         <h1>Test List</h1>
         <x-button type="link" style="primary-filled" text="Create" link="{{ route('test_list.create') }}"/>
     </div>
+    <form action="" method="get" class="flex gap-2">
+        <x-inputs.select name="active" label="Is active" :options="[null=>'None',true=>'Active',false=>'Inactive']" selected="{{ Request::input('active') }}" class="w-full"/>
+        <x-inputs.text type="search" name="search" label="Search" value="{{ Request::input('search') }}" class="w-full"/>
+        <x-button type="submit" style="primary-filled" text="Filter"/>
+    </form>
+</div>
+
+<div class="panel flex-down">
     <table class="table">
         <thead>
             <tr>

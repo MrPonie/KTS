@@ -19,6 +19,7 @@ class Test extends Model
         'created_by',
         'name',
         'content_json',
+        'grading_json',
         'question_count',
         'max_points',
     ];
@@ -32,6 +33,7 @@ class Test extends Model
         'id' => 'integer',
         'created_by' => 'integer',
         'content_json' => 'array',
+        'grading_json' => 'array',
         'max_points' => 'float',
     ];
 

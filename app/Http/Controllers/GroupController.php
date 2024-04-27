@@ -16,6 +16,18 @@ class GroupController extends Controller
         return view('admin/groups/groups')->with(['groups' => $groups]);
     }
 
+    public function student_groups() {
+        $groups = \App\Models\Group::select('id', 'name')->get();
+        $group_users = [];
+        foreach($groups as $group) {
+            $group_users[] = \App\Models\User::select('users.username')
+                ->leftJoin('group__users', 'group__users.user_id', '=', 'users.id')
+                ->where('group__users.group_id', '=', $group->id)
+                ->get();
+        }
+        return view('user/student_groups', ['groups'=>$groups, 'group_users'=>$group_users]);
+    }
+
     public function create_view() {
         return view('admin/groups/create_new_group');
     }

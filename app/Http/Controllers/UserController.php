@@ -12,7 +12,55 @@ use App;
 
 class UserController extends Controller
 {
-    public function dashboard() {return view('user/dashboard');}
+    public function dashboard() {
+        $data = [];
+
+        if($permissions = session('role')['permissions']) {
+            // student
+            if($permissions->can_receive_tests) {
+                $data['assigned_tests'] = \App\Models\Test::count();
+                $data['answered_assigned_tests'] = -1;
+            }
+            // teacher
+            if($permissions->has_question_bank) {
+                $data['question_bank_questions'] = \App\Models\Question::where('created_by', Auth::id())->count();
+                $data['question_bank_topics'] = \App\Models\Topic::where('created_by', Auth::id())->count();
+            }
+            if($permissions->has_test_form_vault) {
+                $data['test_form_vault_forms'] = \App\Models\Test_Form::where('created_by', Auth::id())->count();
+                $data['test_form_vault_forms_used'] = \App\Models\Test::select('tests.test_form_id')->where('tests.created_by', Auth::id())->distinct()->count();
+            }
+            if($permissions->has_tests_list) {
+                $data['test_list_active'] = \App\Models\Test::where('tests.created_by', Auth::id())->where('is_active', true)->count();
+                $data['test_list_inactive'] = \App\Models\Test::where('tests.created_by', Auth::id())->where('is_active', false)->count();
+                $data['test_list_tests'] = \App\Models\Test::where('tests.created_by', Auth::id())->count();
+            }
+            // administrator
+            if($permissions->view_users) {
+                $data['users'] = \App\Models\User::count();
+                $data['users_active'] = \App\Models\User::where('is_active', true)->count();
+                $data['users_inactive'] = \App\Models\User::where('is_active', false)->count();
+                $data['users_online'] = \App\Models\User::where('is_online', true)->count();
+            }
+            if($permissions->view_questions) {
+                $data['questions'] = \App\Models\Question::count();
+            }
+            if($permissions->view_test_forms) {
+                $data['test_forms'] = \App\Models\Test_Form::count();
+            }
+            if($permissions->view_tests) {
+                $data['tests'] = \App\Models\Test::count();
+                $data['test_active'] = \App\Models\Test::where('is_active', true)->count();
+                $data['test_inactive'] = \App\Models\Test::where('is_active', false)->count();
+            }
+            if($permissions->view_responses) {
+                // how many responses
+                // optional - how many responses received this in the past 3 days
+            }
+        }
+
+        return view('user/dashboard', $data);
+    }
 
     public function profile() {
         $groups = \App\Models\Group::select()->leftJoin('group__users', 'group__users.group_id', '=', 'groups.id')->where('group__users.user_id', '=', Auth::id())->get();
@@ -184,25 +232,7 @@ class UserController extends Controller
         return back()->with('success', 'New user created!');
     }
 
-    public function tests() {return view('admin/tests');}
-
     public function responses() {return view('admin/responses');}
-
-    public function test_form_vault() {return view('user/test_form_vault/test_form_vault');}
-    public function create_new_test_form_view() {return view('user/test_form_vault/create_new_test_form');}
-    public function create_new_test_form() {
-
-    }
-    public function export_test_form_view() {return view('user/test_form_vault/export_test_form');}
-    public function export_test_form() {
-        
-    }
-
-    public function test_list() {return view('user/test_list/test_list');}
-    public function create_test_view() {return view('user/test_list/create_test');}
-    public function create_test() {
-        
-    }
 
     public function assigned_tests() {return view('user/assigned_tests/assigned_tests');}
     public function undone_assigned_tests() {return view('user/assigned_tests/undone_assigned_tests');}

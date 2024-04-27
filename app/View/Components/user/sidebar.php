@@ -41,6 +41,9 @@ class Sidebar extends Component
                     ['name'=>'Create new test','link'=>route('test_list.create')],
                 ]];
             }
+            if($permissions->view_groups) {
+                $this->list[] = ['name'=>'Student Groups','link'=>route('student_groups')];
+            }
 
             if($permissions->view_users) {
                 $sublist = [];
