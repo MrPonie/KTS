@@ -9,6 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\TestFormController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\ResponseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,8 +105,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/student_groups', [GroupController::class, 'student_groups'])->name('student_groups');
 
     // "student" role
-    Route::get('/assigned_tests', [UserController::class, 'assigned_tests'])->name('user.assigned_tests')->middleware('permission:can_receive_tests');
+    Route::get('/assigned_tests', [TestController::class, 'assigned_tests'])->name('user.assigned_tests')->middleware('permission:can_receive_tests');
     Route::get('/undone_assigned_tests', [UserController::class, 'undone_assigned_tests'])->name('user.undone_assigned_tests')->middleware('permission:can_receive_tests');
-    Route::get('/repond_to_test', [UserController::class, 'repond_to_test_view'])->name('user.repond_to_test')->middleware('permission:can_receive_tests');
-    Route::post('/repond_to_test', [UserController::class, 'repond_to_test'])->name('user.repond_to_test')->middleware('permission:can_receive_tests');
+    Route::get('/repond_to_test/{id}', [TestController::class, 'repond_to_test_view'])->name('user.repond_to_test')->middleware('permission:can_receive_tests');
+    Route::post('/repond_to_test/{id}', [TestController::class, 'repond_to_test'])->name('user.repond_to_test')->middleware('permission:can_receive_tests');
+    
+    Route::get('/view_results/{id}', [ResponseController::class, 'test_results_view'])->name('user.view_results')->middleware('permission:can_receive_tests');
 });

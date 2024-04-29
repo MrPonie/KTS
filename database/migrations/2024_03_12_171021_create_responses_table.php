@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('test_id')->constrained();
+            $table->integer('points')->unsigned();
+            $table->string('grade');
             $table->json('response_json');
             $table->timestamps();
         });

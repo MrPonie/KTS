@@ -19,6 +19,7 @@ class Test extends Model
         'created_by',
         'name',
         'content_json',
+        'test_form_id',
         'grading_json',
         'question_count',
         'max_points',
@@ -32,6 +33,7 @@ class Test extends Model
     protected $casts = [
         'id' => 'integer',
         'created_by' => 'integer',
+        'test_form_id' => 'integer',
         'content_json' => 'array',
         'grading_json' => 'array',
         'max_points' => 'float',

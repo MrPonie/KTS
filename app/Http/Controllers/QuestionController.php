@@ -105,7 +105,7 @@ class QuestionController extends Controller
             return back()->with('error', 'Question input/options/answer was empty.');
         }
 
-        if(isset($validated['has_correct_answer']) && !isset($validated['answer'])) {
+        if(isset($validated['evaluable']) && !isset($validated['answer'])) {
             return back()->with('error', 'Answer was not set.');
         }
 
@@ -113,7 +113,7 @@ class QuestionController extends Controller
         $cols = [
             'created_by' => Auth::id(),
             'type' => intval($validated['type']),
-            'evaluable' => isset($validated['has_correct_answer']),
+            'evaluable' => isset($validated['evaluable']),
             'points' => isset($validated['points']) ? $validated['points'] : 0,
             'question' => $validated['question'],
             'input_json' => isset($validated['question-input']) ? $validated['question-input'] : '',

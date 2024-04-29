@@ -37,6 +37,25 @@ class TestController extends Controller
         return view('user/test_list/test_list', ['tests'=>$tests]);
     }
 
+    public function assigned_tests(Request $request) {
+        /**DB::raw('case when (
+            select count(*) from test__user__responses where test__user__responses.test_id = tests.id and test__user__responses.user_id = test__users.user_id
+        )>0 then 1 else 0 end as answered') */
+        $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points')
+            ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
+            ->where('test__users.user_id', Auth::id())
+            ->get();
+        $responses = [];
+        foreach($tests as $test) {
+            $responses[] = \App\Models\Response::select('responses.id', 'responses.points', 'responses.grade')
+            ->leftJoin('test__user__responses', 'responses.id', '=', 'test__user__responses.response_id')
+            ->where('test__user__responses.user_id', '=', Auth::id())
+            ->where('test__user__responses.test_id', '=', $test->id)
+            ->get()->first();
+        }
+        return view('user/assigned_tests/assigned_tests', ['tests'=>$tests,'responses'=>$responses]);
+    }
+
     public function create_view(Request $request) {
         return view('user/test_list/create_test');
     }
@@ -52,7 +71,7 @@ class TestController extends Controller
         foreach($validated['groups'] as $group) {
             $u = \App\Models\Group_User::select('id')->where('group_id', '=', $group)->get();
             // return back()->with('error', json_encode($u));
-            foreach($u as $uu) {$users[] = $uu->id;}
+            foreach($u as $uu) {$users[] = $uu->user_id;}
         }
 
         $form = \App\Models\Test_Form::find($validated['form']);
@@ -100,5 +119,17 @@ class TestController extends Controller
         $test->is_active = false;
         if($test->save()) return back()->with('success', 'Successfuly stopped the test.');
         return back()->with('error', 'Failed to start test.');
+    }
+
+    public function repond_to_test_view(Request $request, int $id) {
+        $test = \App\Models\Test::find($id);
+
+        if(!$test) return back()->with('error', 'Could not find test of ID.');
+
+        return view('user/assigned_tests/respond_to_test', ['test'=>$test, 'id'=>$id]);
+    }
+
+    public function repond_to_test(Request $request, int $id) {
+        return back()->with('debug', json_encode($request->all()));
     }
 }

@@ -18,7 +18,7 @@ class UserController extends Controller
         if($permissions = session('role')['permissions']) {
             // student
             if($permissions->can_receive_tests) {
-                $data['assigned_tests'] = \App\Models\Test::count();
+                $data['assigned_tests'] = \App\Models\Test::leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')->where('test__users.user_id', Auth::id())->count();
                 $data['answered_assigned_tests'] = -1;
             }
             // teacher
