@@ -102,7 +102,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/stop/{id}', [TestController::class, 'stop'])->name('test_list.stop');
     })->middleware('permission:has_tests_list');
 
-    Route::get('/responses/{id}', [ResponseController::class, 'test_responses'])->defaults('id', null)->name('test_responses');
+    Route::get('/responses', [ResponseController::class, 'test_responses'])->name('test_responses');
 
     Route::get('/student_groups', [GroupController::class, 'student_groups'])->name('student_groups');
 

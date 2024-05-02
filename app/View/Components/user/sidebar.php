@@ -40,6 +40,7 @@ class Sidebar extends Component
                 $this->list[] = ['name'=>'Test List','link'=>route('test_list'),'sublist'=>[
                     ['name'=>'Create new test','link'=>route('test_list.create')],
                 ]];
+                $this->list[] = ['name'=>'Responses','link'=>route('test_responses')];
             }
             if($permissions->view_groups) {
                 $this->list[] = ['name'=>'Student Groups','link'=>route('student_groups')];
