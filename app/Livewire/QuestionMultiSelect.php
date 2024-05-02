@@ -93,7 +93,7 @@ class QuestionMultiSelect extends Component
 
         return view('livewire.question-multi-select', [
             'question_name' => old('question') ?: ($this->question ? $this->question->question : ''),
-            'question_input' => json_encode($question_input_arr)
+            'question_input' => $question_input_arr
         ]);
     }
 }

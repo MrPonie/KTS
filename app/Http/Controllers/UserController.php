@@ -19,7 +19,12 @@ class UserController extends Controller
             // student
             if($permissions->can_receive_tests) {
                 $data['assigned_tests'] = \App\Models\Test::leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')->where('test__users.user_id', Auth::id())->count();
-                $data['answered_assigned_tests'] = -1;
+                $data['answered_assigned_tests'] = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points')
+                    ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
+                    ->where('test__users.user_id', Auth::id())
+                    ->whereRaw('(select count(*) from responses where responses.test_id = tests.id and responses.created_by = test__users.user_id) > 0')
+                    ->count();
+                $data['unanswered_assigned_tests'] = $data['assigned_tests'] - $data['answered_assigned_tests'];
             }
             // teacher
             if($permissions->has_question_bank) {
@@ -28,7 +33,7 @@ class UserController extends Controller
             }
             if($permissions->has_test_form_vault) {
                 $data['test_form_vault_forms'] = \App\Models\Test_Form::where('created_by', Auth::id())->count();
-                $data['test_form_vault_forms_used'] = \App\Models\Test::select('tests.test_form_id')->where('tests.created_by', Auth::id())->distinct()->count();
+                $data['test_form_vault_forms_used'] = \App\Models\Test_Form::whereRaw('(select count(*) from tests where tests.test_form_id = test__forms.id) > 0')->where('created_by', Auth::id())->distinct()->count();
             }
             if($permissions->has_tests_list) {
                 $data['test_list_active'] = \App\Models\Test::where('tests.created_by', Auth::id())->where('is_active', true)->count();

@@ -2,8 +2,6 @@
 
 <x-alerts/>
 
-@dump(session('debug'))
-
 <div class="panel">
     <div class="flex justify-between items-center">
         <h1>{{ $test->name }}</h1>
@@ -17,8 +15,8 @@
 
 <form action="{{ route('user.repond_to_test', $id) }}" method="post" class="panel flex flex-col gap-10">
     @csrf
-    @foreach ($test->content_json as $question)
-        <x-question :question="$question"/>
+    @foreach ($test->content_json as $index=>$question)
+        <x-question :question="$question" :index="$index"/>
     @endforeach
     <x-button type="submit" style="primary" text="Sumbit" class="justify-center"/>
 </form>

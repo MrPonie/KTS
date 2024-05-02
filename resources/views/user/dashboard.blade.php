@@ -5,14 +5,15 @@
 <div class="grid grid-cols-4 gap-4">
     @if (has_permission('can_receive_tests'))
         <x-dashboard-panel title="Assigned tests">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $assigned_tests }}</p>
             <div class="grid grid-cols-2">
-                <div class="">
-                    <p>Total</p>
-                    <p>{{ $assigned_tests }}</p>
-                </div>
-                <div class="">
+                <div class="flex flex-col items-center">
                     <p>Answered</p>
-                    <p>{{ $answered_assigned_tests }}</p>
+                    <p class="text-green-500 text-5xl">{{ $answered_assigned_tests }}</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <p>Unanswered</p>
+                    <p class="text-red-500 text-5xl">{{ $unanswered_assigned_tests }}</p>
                 </div>
             </div>
         </x-dashboard-panel>

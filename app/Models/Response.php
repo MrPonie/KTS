@@ -18,6 +18,9 @@ class Response extends Model
     protected $fillable = [
         'created_by',
         'test_id',
+        'points',
+        'grade',
+        'passed',
         'response_json',
     ];
 
@@ -30,6 +33,8 @@ class Response extends Model
         'id' => 'integer',
         'created_by' => 'integer',
         'test_id' => 'integer',
+        'points' => 'integer',
+        'passed' => 'boolean',
         'response_json' => 'array',
     ];
 

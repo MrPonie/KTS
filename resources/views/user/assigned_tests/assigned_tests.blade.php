@@ -33,7 +33,7 @@
                     <td>{{ $test->question_count }}</td>
                     <td>{{ $test->max_points }}</td>
                     <td>
-                        @if ($test->answered)
+                        @if ($responses[$index])
                             <span class="text-green-500">Yes</span>
                         @else
                             <span class="text-red-500">No</span>
@@ -49,7 +49,7 @@
                     <td>
                         <div class="flex gap-1">
                             @if ($responses[$index])
-                                <x-button type="link" style="primary" leadingIcon="eye" title="See results" link="{{ route('user.view_results', $test->id) }}"/>
+                                <x-button type="link" style="primary" leadingIcon="eye" title="See results" link="{{ route('user.view_results', $responses[$index]->id) }}"/>
                             @else
                                 <x-button type="link" style="primary" leadingIcon="pen" leadingIconStyle="solid" title="Answer" link="{{ route('user.repond_to_test', $test->id) }}"/>
                             @endif

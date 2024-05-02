@@ -26,8 +26,9 @@ class TestController extends Controller
     }
 
     public function list(Request $request) {
-        $tests = \App\Models\Test::select('tests.*', DB::raw('count(test__users.user_id) as user_count'))
+        $tests = \App\Models\Test::select('tests.*', DB::raw('count(test__users.user_id) as user_count'), DB::raw('count(responses.id) as responses'))
             ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
+            ->leftJoin('responses', 'responses.test_id', '=', 'tests.id')
             ->groupBy('tests.id', 'tests.created_by', 'tests.test_form_id', 'tests.name', 'tests.is_active', 'tests.content_json', 'tests.grading_json', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'tests.updated_at');
         // filters
         if($request->input('active') !== null) $tests = $tests->where('tests.is_active', '=', $request->input('active'));
@@ -38,22 +39,29 @@ class TestController extends Controller
     }
 
     public function assigned_tests(Request $request) {
-        /**DB::raw('case when (
-            select count(*) from test__user__responses where test__user__responses.test_id = tests.id and test__user__responses.user_id = test__users.user_id
-        )>0 then 1 else 0 end as answered') */
+        $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points')
+            ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
+            ->where('test__users.user_id', Auth::id());
+        if($request->input('search') !== null) $tests = $tests->where('tests.name', 'like', '%'.$request->input('search').'%');
+        $tests = $tests->get();
+        $responses = [];
+        foreach($tests as $test) {
+            $responses[] = \App\Models\Response::select('id', 'points', 'grade')
+                ->where('created_by', '=', Auth::id())
+                ->where('test_id', '=', $test->id)
+                ->get()->first();
+        }
+        return view('user/assigned_tests/assigned_tests', ['tests'=>$tests,'responses'=>$responses]);
+    }
+
+    public function undone_assigned_tests(Request $request) {
         $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points')
             ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
             ->where('test__users.user_id', Auth::id())
+            ->whereRaw('(select count(*) from responses where responses.test_id = tests.id and responses.created_by = test__users.user_id) = 0')
             ->get();
-        $responses = [];
-        foreach($tests as $test) {
-            $responses[] = \App\Models\Response::select('responses.id', 'responses.points', 'responses.grade')
-            ->leftJoin('test__user__responses', 'responses.id', '=', 'test__user__responses.response_id')
-            ->where('test__user__responses.user_id', '=', Auth::id())
-            ->where('test__user__responses.test_id', '=', $test->id)
-            ->get()->first();
-        }
-        return view('user/assigned_tests/assigned_tests', ['tests'=>$tests,'responses'=>$responses]);
+        
+        return view('user/assigned_tests/undone_assigned_tests', ['tests'=>$tests]);
     }
 
     public function create_view(Request $request) {
@@ -62,6 +70,7 @@ class TestController extends Controller
 
     public function create(Request $request) {
         $validated = $request->validate([
+            'title' => 'required|string',
             'groups' => 'required|array',
             'form' => 'required',
             'grading' => 'required|string',
@@ -69,8 +78,7 @@ class TestController extends Controller
 
         $users = [];
         foreach($validated['groups'] as $group) {
-            $u = \App\Models\Group_User::select('id')->where('group_id', '=', $group)->get();
-            // return back()->with('error', json_encode($u));
+            $u = \App\Models\Group_User::select('user_id')->where('group_id', '=', $group)->get();
             foreach($u as $uu) {$users[] = $uu->user_id;}
         }
 
@@ -80,7 +88,7 @@ class TestController extends Controller
         $cols = [
             'created_by' => Auth::id(),
             'test_form_id' => $form->id,
-            'name' => $form->name,
+            'name' => $validated['title'],
             'is_active' => false,
             'content_json' => $form->questions_json,
             'grading_json' => $validated['grading'],
@@ -122,14 +130,78 @@ class TestController extends Controller
     }
 
     public function repond_to_test_view(Request $request, int $id) {
-        $test = \App\Models\Test::find($id);
+        // check if user has responded to the test already
+        $found = \App\Models\Response::where('test_id', $id)->where('created_by', Auth::id())->count();
+        if($found > 0) return redirect(route('user.assigned_tests'))->with('warning', 'User has already done this test!');
 
-        if(!$test) return back()->with('error', 'Could not find test of ID.');
+        $found = \App\Models\Test::leftJoin('test__users', 'test__users.test_id', 'tests.id')
+            ->where('tests.id', $id)
+            ->where('test__users.user_id', Auth::id())
+            ->count();
+        if($found <= 0) return redirect(route('user.assigned_tests'))->with('error', 'Could not find the test.');
+
+        // create a new response record that would be empty until submission
+        $response = new \App\Models\Response;
+        $response->created_by = Auth::id();
+        $response->test_id = $id;
+        $response->created_at = \Carbon\Carbon::now();
+        $response->updated_at = \Carbon\Carbon::now();
+        if(!$response->save()) return redirect(route('user.assigned_tests'))->with('error', 'Failed to prepare response record.');
+
+        $test = \App\Models\Test::find($id);
+        if(!$test) return redirect(route('user.assigned_tests'))->with('error', 'Could not find test of ID.');
 
         return view('user/assigned_tests/respond_to_test', ['test'=>$test, 'id'=>$id]);
     }
 
     public function repond_to_test(Request $request, int $id) {
-        return back()->with('debug', json_encode($request->all()));
+        $validated = $request->validate([
+            'answer' => 'required|array'
+        ]);
+
+        $test = \App\Models\Test::find($id);
+        if(!$test) return back()->with('error', 'Failed to find test of ID.');
+
+        $response = \App\Models\Response::where('created_by', Auth::id())
+            ->where('test_id', $id)
+            ->get()->first();
+        if(!$response) return back()->with('error', 'Failed to find response record to fill.');
+
+        $res = [];
+        $points = 0;
+        foreach($validated['answer'] as $index=>$answer) {
+            $test_question_answer = $test->content_json[$index]['type']==1 ? json_decode($test->content_json[$index]['answer_json']) : $test->content_json[$index]['answer_json'];
+            $res[] = (object)[
+                'answer' => $answer,
+                'correct' => $answer == $test_question_answer,
+            ];
+            if($answer == $test_question_answer) {
+                $points += $test->content_json[$index]['points'];
+            }
+        }
+
+        $grade = '';
+        $passed = false;
+        $perc = $points / $test->max_points * 100;
+        $grades = json_decode($test->grading_json);
+        $perc_diff_min = PHP_INT_MAX;
+        foreach(json_decode($test->grading_json) as $g) {
+            $diff = abs($g->percent - $perc);
+            if($diff < $perc_diff_min) {
+                $perc_diff_min = $diff;
+                $grade = $g->grade;
+                $passed = $g->pass;
+            }
+        }
+
+        $response->response_json = $res;
+        $response->points = $points;
+        $response->grade = $grade;
+        $response->passed = $passed;
+        $response->updated_at = \Carbon\Carbon::now();
+
+        if(!$response->save()) return back()->with('error', 'Failed to save response.');
+
+        return redirect(route('user.view_results', $response->id));
     }
 }

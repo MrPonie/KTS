@@ -13,6 +13,7 @@ class TemplateHeader extends Component
      */
     public function __construct(
         public string $title='',
+        public bool $showsidebar=true,
         public string $sidebarfocusitem='',
         public string $sidebarfocussubitem='',
     ) {}
