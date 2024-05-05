@@ -4,7 +4,7 @@
 @endphp
 <div class="flex-down {{ $answer!==null ? ($answer['correct'] ? 'border border-green-500 p-2 rounded' : 'border border-red-500 p-2 rounded') : '' }}">
     <div class="flex gap-1">
-        <p class="grow">{!! $question['question'] !!}</p>
+        <p class="grow">{{ $index+1 }}. {!! $question['question'] !!}</p>
         @if ($answer !== null)
             <p>{{ $answer['correct'] ? '+'.$question['points'] : '+0' }}</p>
         @endif
@@ -21,7 +21,7 @@
     @case(1)
         @foreach (json_decode($question['input_json']) as $option)
             <label class="flex gap-2">
-                <input type="checkbox" name="answer[{{ $index }}][]" value="{{ $option->id }}" @checked(is_array($answer) && in_array($option->id, $ans)) @disabled(!$interactable)>
+                <input type="checkbox" name="answer[{{ $index }}][]" value="{{ $option->id }}" @checked(is_array($answer) && is_array($ans) && in_array($option->id, $ans)) @disabled(!$interactable)>
                 <p>{{ $option->text }}</p>
             </label>
         @endforeach

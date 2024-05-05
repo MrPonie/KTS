@@ -22,3 +22,23 @@
 </form>
 
 <x-user.template-footer/>
+
+<!-- <script>
+    var unloadEventFired = false;
+    window.addEventListener('beforeunload', function(e) {
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = '';
+
+        // Alert message
+        var confirmationMessage = 'Are you sure you want to leave this page? Your changes may not be saved.';
+
+        // Display confirmation dialog
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    });
+    window.addEventListener('unload', function() {
+        unloadEventFired = true;
+    });
+</script> -->

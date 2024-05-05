@@ -31,12 +31,20 @@
                 <tr>
                     <td>{{ $test->name }}</td>
                     <td>{{ $test->user }}</td>
-                    <td>{{ $test->is_active }}</td>
+                    <td>
+                        @if ($test->is_active)
+                            <span class="text-green-500">Active</span>
+                        @else
+                            <span class="text-red-500">Inactive</span>
+                        @endif
+                    </td>
                     <td>{{ $test->question_count }}</td>
                     <td>{{ $test->max_points }}</td>
                     <td></td>
                     <td>{{ $test->created_at }}</td>
-                    <td></td>
+                    <td>
+                        
+                    </td>
                 </tr>
             @endforeach
         </tbody>

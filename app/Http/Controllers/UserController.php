@@ -39,6 +39,7 @@ class UserController extends Controller
                 $data['test_list_active'] = \App\Models\Test::where('tests.created_by', Auth::id())->where('is_active', true)->count();
                 $data['test_list_inactive'] = \App\Models\Test::where('tests.created_by', Auth::id())->where('is_active', false)->count();
                 $data['test_list_tests'] = \App\Models\Test::where('tests.created_by', Auth::id())->count();
+                $data['received_responses'] = \App\Models\Response::leftJoin('tests', 'tests.id', 'responses.test_id')->where('tests.created_by', Auth::id())->count();
             }
             // administrator
             if($permissions->view_users) {
@@ -59,8 +60,7 @@ class UserController extends Controller
                 $data['test_inactive'] = \App\Models\Test::where('is_active', false)->count();
             }
             if($permissions->view_responses) {
-                // how many responses
-                // optional - how many responses received this in the past 3 days
+                $data['responses'] = \App\Models\Response::count();
             }
         }
 
@@ -235,14 +235,5 @@ class UserController extends Controller
         }
 
         return back()->with('success', 'New user created!');
-    }
-
-    public function responses() {return view('admin/responses');}
-
-    public function assigned_tests() {return view('user/assigned_tests/assigned_tests');}
-    public function undone_assigned_tests() {return view('user/assigned_tests/undone_assigned_tests');}
-    public function repond_to_test_view() {return view('user/assigned_tests/respond_to_test');}
-    public function repond_to_test() {
-
     }
 }

@@ -22,11 +22,11 @@
         <x-dashboard-panel title="Question bank">
             <div class="grid grid-cols-2">
                 <div class="">
-                    <p class="text-center text-xl">Questions</p>
+                    <p class="text-center text-xl text-black">Questions</p>
                     <p class="text-center text-5xl text-black">{{ $question_bank_questions }}</p>
                 </div>
                 <div class="">
-                    <p class="text-center text-xl">Topics</p>
+                    <p class="text-center text-xl text-black">Topics</p>
                     <p class="text-center text-5xl text-black">{{ $question_bank_topics }}</p>
                 </div>
             </div>
@@ -36,11 +36,11 @@
         <x-dashboard-panel title="Test form vault">
             <div class="grid grid-cols-2">
                 <div class="">
-                    <p class="text-center text-xl">Test forms</p>
+                    <p class="text-center text-xl text-black">Test forms</p>
                     <p class="text-center text-5xl text-black">{{ $test_form_vault_forms }}</p>
                 </div>
                 <div class="">
-                    <p class="text-center text-xl">Test forms used</p>
+                    <p class="text-center text-xl text-black">Test forms used</p>
                     <p class="text-center text-5xl text-black">{{ $test_form_vault_forms_used }}</p>
                 </div>
             </div>
@@ -59,6 +59,9 @@
                     <p class="text-red-500 text-5xl">{{ $test_list_inactive }}</p>
                 </div>
             </div>
+        </x-dashboard-panel>
+        <x-dashboard-panel title="Responses">
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $received_responses }}</p>
         </x-dashboard-panel>
     @endif
     @if (has_permission('view_users'))
@@ -129,7 +132,7 @@
     @endif
     @if (has_permission('view_responses'))
         <x-dashboard-panel title="Responses">
-
+            <p class="mb-2 text-center text-xl text-black">Total: {{ $responses }}</p>
         </x-dashboard-panel>
     @endif
 </div>

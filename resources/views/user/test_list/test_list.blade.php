@@ -48,7 +48,7 @@
                     <td>{{ $test->updated_at }}</td>
                     <td>
                         <div class="flex gap-1">
-                            <x-button type="link" style="primary" leadingIcon="comment" link="{{ route('test_responses', $test->id) }}" title="View reponses"/>
+                            <x-button type="link" style="primary" leadingIcon="comment" link="{{ route('test_responses') }}?test={{ $test->id }}" title="View reponses"/>
                             @if ($test->is_active)
                                 <form action="{{ route('test_list.stop', $test->id) }}" method="post" onsubmit="return confirm('Are you sure you want to deactivate this test?')">
                                     @csrf

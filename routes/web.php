@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/tests', [TestController::class, 'tests'])->name('tests')->middleware('permission:view_tests');
 
-    Route::get('/responses', [UserController::class, 'responses'])->name('responses')->middleware('permission:view_responses');
+    Route::get('/responses', [ResponseController::class, 'responses'])->name('responses')->middleware('permission:view_responses');
 
     // "teacher" role
     Route::prefix('question_bank')->group(function(){
@@ -102,7 +102,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/stop/{id}', [TestController::class, 'stop'])->name('test_list.stop');
     })->middleware('permission:has_tests_list');
 
-    Route::get('/responses', [ResponseController::class, 'test_responses'])->name('test_responses');
+    Route::get('/test_responses', [ResponseController::class, 'test_responses'])->name('test_responses');
 
     Route::get('/student_groups', [GroupController::class, 'student_groups'])->name('student_groups');
 

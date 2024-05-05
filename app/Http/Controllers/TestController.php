@@ -169,16 +169,34 @@ class TestController extends Controller
 
         $res = [];
         $points = 0;
-        foreach($validated['answer'] as $index=>$answer) {
-            $test_question_answer = $test->content_json[$index]['type']==1 ? json_decode($test->content_json[$index]['answer_json']) : $test->content_json[$index]['answer_json'];
-            $res[] = (object)[
-                'answer' => $answer,
-                'correct' => $answer == $test_question_answer,
-            ];
-            if($answer == $test_question_answer) {
-                $points += $test->content_json[$index]['points'];
+        foreach($test->content_json as $index=>$test_question) {
+            if(isset($validated['answer'][$index])) {
+                $answer = $validated['answer'][$index];
+                $test_question_answer = $test->content_json[$index]['type']==1 ? json_decode($test->content_json[$index]['answer_json']) : $test->content_json[$index]['answer_json'];
+                $res[] = (object)[
+                    'answer' => $answer,
+                    'correct' => $answer == $test_question_answer,
+                ];
+                if($answer == $test_question_answer) {
+                    $points += $test->content_json[$index]['points'];
+                }
+            }else{
+                $res[] = (object)[
+                    'answer' => null,
+                    'correct' => false,
+                ];
             }
         }
+        // foreach($validated['answer'] as $index=>$answer) {
+        //     $test_question_answer = $test->content_json[$index]['type']==1 ? json_decode($test->content_json[$index]['answer_json']) : $test->content_json[$index]['answer_json'];
+        //     $res[] = (object)[
+        //         'answer' => $answer,
+        //         'correct' => $answer == $test_question_answer,
+        //     ];
+        //     if($answer == $test_question_answer) {
+        //         $points += $test->content_json[$index]['points'];
+        //     }
+        // }
 
         $grade = '';
         $passed = false;

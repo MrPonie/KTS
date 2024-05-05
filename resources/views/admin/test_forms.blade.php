@@ -39,11 +39,7 @@
                     <td>{{ $form->updated_at }}</td>
                     <td>
                         <div class="flex gap-1 items-center">
-                            <form action="" method="post">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $form->id }}">
-                                <x-button type="submit" style="primary" leadingIcon="eye"/>
-                            </form>
+                            <x-button type="link" style="primary" leadingIcon="eye" link="#"/>
                             <form action="" method="post" onsubmit="if(!confirm('Are you sure you want to delete this question?')) {return false;}">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $form->id }}">
