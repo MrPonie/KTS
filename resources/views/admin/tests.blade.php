@@ -40,10 +40,15 @@
                     </td>
                     <td>{{ $test->question_count }}</td>
                     <td>{{ $test->max_points }}</td>
-                    <td></td>
+                    <td>{{ $test->student_count }}</td>
                     <td>{{ $test->created_at }}</td>
                     <td>
-                        
+                        <div class="flex gap-1">
+                            <x-button type="link" style="primary" leadingIcon="eye"/>
+                            @if ($test->is_active)
+                                <x-button type="link" style="error" leadingIcon="ban" leadingIconStyle="solid"/>
+                            @endif
+                        </div>
                     </td>
                 </tr>
             @endforeach

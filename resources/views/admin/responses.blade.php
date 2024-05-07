@@ -29,6 +29,7 @@
                     <td>
                         <div class="flex gap-1">
                             <x-button type="link" style="primary" leadingIcon="eye" link="#"/>
+                            <x-button type="link" style="error" leadingIcon="x" link="#"/>
                         </div>
                     </td>
                 </tr>

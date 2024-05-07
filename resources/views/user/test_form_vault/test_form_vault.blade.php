@@ -38,11 +38,11 @@
                     <td>
                         <div class="flex gap-1">
                             <x-button type="link" style="primary" leadingIcon="pen-to-square" link="{{ route('test_form_vault.edit', $form->id) }}"/>
-                            <form action="{{ route('test_form_vault.export', $form->id) }}" method="post">
+                            <!-- <form action="{{ route('test_form_vault.export', $form->id) }}" method="post">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $form->id }}">
                                 <x-button type="submit" style="primary" leadingIcon="file-export" leadingIconStyle="solid"/>
-                            </form>
+                            </form> -->
                             <form action="{{ route('test_form_vault.delete', $form->id) }}" method="post" onsubmit="if(!confirm('Permanently delete the test form?')){return false;}">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $form->id }}">

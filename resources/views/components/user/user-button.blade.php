@@ -1,7 +1,7 @@
 <?php $rnd = bin2hex(random_bytes(3)); ?>
 <div class="user-button-container">
     <button class="user-button">
-        <div class="w-6 h-6 bg-gray-500"></div>
+        <!-- <div class="w-6 h-6 bg-gray-500"></div> -->
         @if (session('username'))
             <p>{{ session('username') }}</p>
         @endif

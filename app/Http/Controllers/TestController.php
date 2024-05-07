@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     public function tests(Request $request) {
-        $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'users.username as user')
-            ->leftJoin('users', 'users.id', '=', 'tests.created_by');
+        $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'users.username as user', DB::raw('count(test__users.test_id) as student_count'))
+            ->leftJoin('users', 'users.id', '=', 'tests.created_by')
+            ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
+            ->groupBy('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points', 'tests.created_at', 'users.username');
         // filters
         if($request->input('by') !== null) $tests = $tests->where('tests.created_by', '=', $request->input('by'));
         if($request->input('active') !== null) $tests = $tests->where('tests.is_active', '=', $request->input('active'));
