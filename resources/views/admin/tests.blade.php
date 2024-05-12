@@ -44,7 +44,7 @@
                     <td>{{ $test->created_at }}</td>
                     <td>
                         <div class="flex gap-1">
-                            <x-button type="link" style="primary" leadingIcon="eye"/>
+                            {{-- <x-button type="link" style="primary" leadingIcon="eye"/> --}}
                             @if ($test->is_active)
                                 <x-button type="link" style="error" leadingIcon="ban" leadingIconStyle="solid"/>
                             @endif
