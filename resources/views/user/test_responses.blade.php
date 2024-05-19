@@ -29,7 +29,7 @@
                         <td>{{ $response->grade }}</td>
                         <td>{{ $response->created_at }}</td>
                         <td class="flex">
-                            <x-button type="link" style="primary" leadingIcon="eye" link="#"/>
+                            <x-button type="link" style="primary" leadingIcon="eye" link="{{ route('test_response', $response->id) }}"/>
                         </td>
                     </tr>
                 @endforeach

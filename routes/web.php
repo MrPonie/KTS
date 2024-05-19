@@ -11,17 +11,6 @@ use App\Http\Controllers\TestFormController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ResponseController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {return redirect(route('user.login'));});
 
 Route::prefix('user')->group(function() {
@@ -103,6 +92,7 @@ Route::middleware(['auth'])->group(function(){
     })->middleware('permission:has_tests_list');
 
     Route::get('/test_responses', [ResponseController::class, 'test_responses'])->name('test_responses');
+    Route::get('/test_response/{id}', [ResponseController::class, 'test_response'])->name('test_response');
 
     Route::get('/student_groups', [GroupController::class, 'student_groups'])->name('student_groups');
 

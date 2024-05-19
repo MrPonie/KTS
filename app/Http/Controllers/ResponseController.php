@@ -96,4 +96,18 @@ class ResponseController extends Controller
             'id', 'responses', 'tests', 'min', 'max', 'range', 'mean', 'median', 'std_deviation', 'test_question_analysis_data', 'responses_count'
         ));
     }
+
+    public function test_response(Request $request, int $id) {
+        $response = \App\Models\Response::find($id);
+
+        if(!$response) return back()->with('error', 'Response not found.');
+
+        $test = \App\Models\Test::where('id', $response->test_id)->where('created_by', Auth::id())->get()->first();
+
+        if(!$test) return back()->with('error', 'Response not found.');
+
+        $user = \App\Models\User::find($response->created_by);
+
+        return view('user/test_response', compact('response', 'test', 'user'));
+    }
 }
