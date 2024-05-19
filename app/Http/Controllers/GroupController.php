@@ -115,4 +115,16 @@ class GroupController extends Controller
 
         return back()->with('success', 'Successfuly updated the group.');
     }
+
+    public function delete(Request $request, int $id)  {
+        $group = \App\Models\Group::find($id);
+        if(!$group) {return back()->with('error', 'Could not find the group to update');}
+
+        $gus = \App\Models\User_Group::where('group_id', $id)->get();
+        foreach($gus as $gu) $gu->delete();
+
+        $group->delete();
+
+        return back()->with('success', 'Successfuly deleted the group.');
+    }
 }

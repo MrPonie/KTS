@@ -45,10 +45,13 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/create', [GroupController::class, 'create'])->name('groups.create');
         Route::get('/edit/{id}', [GroupController::class, 'edit_view'])->name('groups.edit');
         Route::post('/edit/{id}', [GroupController::class, 'edit'])->name('groups.edit');
+        Route::post('/delete/{id}', [GroupController::class, 'delete'])->name('groups.delete');
     })->middleware('permission:edit_users');
 
     Route::get('/questions', [QuestionController::class, 'questions'])->name('questions')->middleware('permission:view_questions');
+    Route::post('/questions/delete/{id}', [QuestionController::class, 'delete'])->name('delete_question')->middleware('permission:view_questions');
     Route::get('/topics', [TopicController::class, 'topics'])->name('topics')->middleware('permission:view_questions');
+    Route::post('/topics/delete/{id}', [QuestionController::class, 'delete'])->name('delete_topic')->middleware('permission:view_questions');
 
     Route::get('/test_forms', [TestFormController::class, 'test_forms'])->name('test_forms')->middleware('permission:view_test_forms');
 

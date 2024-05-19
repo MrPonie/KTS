@@ -32,6 +32,7 @@
                         <td>
                             <div class="flex gap-2">
                                 <x-button type="link" style="primary" leadingIcon="pen-to-square" title="Edit group" link="{{ route('groups.edit', $group->id) }}"/>
+                                <x-button type="link" style="error" leadingIcon="x" title="Delete group" link="{{ route('groups.delete', $group->id) }}"/>
                             </div>
                         </td>
                     </tr>

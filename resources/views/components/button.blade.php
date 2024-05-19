@@ -1,7 +1,7 @@
 @if ($type == 'link')
-<a href="{{ $link }}" {{ $attributes->class(['ja pierdole', $buttonClass]) }} @disabled($disabled) >
+<a href="{{ $link }}" {{ $attributes->class([$buttonClass]) }} @disabled($disabled) >
 @else
-<button type="{{ $type }}" {{ $attributes->class(['ja pierdole', $buttonClass]) }} @disabled($disabled) >
+<button type="{{ $type }}" {{ $attributes->class([$buttonClass]) }} @disabled($disabled) >
 @endif
 @if (!empty($leadingIcon))
     <span><x-icon icon="{{ $leadingIcon }}" style="{{ $leadingIconStyle }}"/>@if($text) &nbsp; @endif</span>
