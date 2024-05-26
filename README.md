@@ -1,4 +1,4 @@
-# KTIS
+# KTS
 
 A knowledge testing information system created as my studies finishing project ... so do not expect anything amazing, thanks
 
