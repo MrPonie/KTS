@@ -1,6 +1,6 @@
 <?php $rnd = 'nx'.bin2hex(random_bytes(3));?>
 <div class="flex-down">
-    <input type="hidden" name="question-input" value="{{ $question_input }}">
+    <input type="hidden" name="question-input" value="{{ json_encode($question_input) }}">
     @error('question-input')
         <p class="input-error">{{$message}}</p>
     @enderror

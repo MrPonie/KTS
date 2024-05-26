@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\navlist;
+namespace App\View\Components\Navlist;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class navlist extends Component
+class Navlist extends Component
 {
     /**
      * Create a new component instance.

@@ -24,7 +24,13 @@
 
 <div class="panel flex flex-col gap-10">
     @foreach ($test->content_json as $index=>$question)
-        <x-question :question="$question" :index="$index" :answer="$response->response_json[$index]" :interactable="false"/>
+        <div class="flex">
+            <div class="w-full">
+                <x-question :question="$question" :index="$index" :answer="$response->response_json[$index]" :interactable="false"/>
+            </div>
+            {{-- <x-button type="link" style="success" leadingIcon="check" leadingIconStyle="solid" title="Mark correct" link="{{ route('edit_test_response', [$id, $index, 1]) }}"/>
+            <x-button type="link" style="error" leadingIcon="x" leadingIconStyle="solid" title="Mark incorrect" link="{{ route('edit_test_response', [$id, $index, 0]) }}"/> --}}
+        </div>
     @endforeach
 </div>
 

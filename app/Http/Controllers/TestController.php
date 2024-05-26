@@ -43,7 +43,8 @@ class TestController extends Controller
     public function assigned_tests(Request $request) {
         $tests = \App\Models\Test::select('tests.id', 'tests.name', 'tests.is_active', 'tests.question_count', 'tests.max_points')
             ->leftJoin('test__users', 'test__users.test_id', '=', 'tests.id')
-            ->where('test__users.user_id', Auth::id());
+            ->where('test__users.user_id', Auth::id())
+            ->where('tests.is_active', true);
         if($request->input('search') !== null) $tests = $tests->where('tests.name', 'like', '%'.$request->input('search').'%');
         $tests = $tests->get();
         $responses = [];

@@ -108,6 +108,11 @@ class ResponseController extends Controller
 
         $user = \App\Models\User::find($response->created_by);
 
-        return view('user/test_response', compact('response', 'test', 'user'));
+        return view('user/test_response', compact('response', 'test', 'user', 'id'));
+    }
+
+    public function edit_test_response(Request $request, int $id, int $qid, int $status) {
+        // return back()->with('error', json_encode([$id, $qid, $status]));
+        dd('test');
     }
 }

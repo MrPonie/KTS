@@ -10,7 +10,6 @@ class QuestionBuilder extends Component
         0 => 'Single select',
         1 => 'Multi select',
         2 => 'Text area',
-        3 => 'File',
     ];
     public ?\App\Models\Question $question = null;
     
