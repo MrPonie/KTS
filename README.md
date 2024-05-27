@@ -19,7 +19,7 @@ optionaly run `npm run build` to compile JS and CSS
 - set `DB_CONNECTION` to `mysql` or other used DB engine
 - set `DB_HOST` to URL/IP adress that the database is accessed through, set to `127.0.0.1` if is being run localy
 - set `DB_PORT` to port used for database connection, default is `3306`
-- set `DB_DATABASE` to database name, you will need to create the database in the engine before stating Laravel
+- set `DB_DATABASE` to database name, you will need to create the database in the engine before starting Laravel
 - set `DB_USERNAME` to database user username used for connection
 - set `DB_PASSWORD` to database user password used for connection
 
