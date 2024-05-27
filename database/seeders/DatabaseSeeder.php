@@ -96,8 +96,8 @@ class DatabaseSeeder extends Seeder
         }
 
         \App\Models\User::factory()->create(['username' => 'admin', 'role_id' => 1, 'is_active' => true]);
-        \App\Models\User::factory()->create(['username' => 'teacher', 'role_id' => 2, 'is_active' => true]);
-        \App\Models\User::factory()->create(['role_id' => 2, 'is_active' => true]);
-        \App\Models\User::factory()->create(['role_id' => 3, 'is_active' => true]);
+        // \App\Models\User::factory()->create(['username' => 'teacher', 'role_id' => 2, 'is_active' => true]);
+        // \App\Models\User::factory()->create(['role_id' => 2, 'is_active' => true]);
+        // \App\Models\User::factory()->create(['role_id' => 3, 'is_active' => true]);
     }
 }
