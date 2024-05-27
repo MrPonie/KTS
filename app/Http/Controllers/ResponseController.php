@@ -59,7 +59,7 @@ class ResponseController extends Controller
             if(count($points) > 0) {
                 $mean = count($points) > 0 ? array_sum($points) / count($points) : null;
                 sort($points);
-                if(count($points)%2 == 0 && count($points) > 0) $median = ($points[count($points)] + $points[count($points)-1]) / 2;
+                if(count($points)%2 == 0 && count($points) > 0) $median = ($points[count($points)-1] + $points[count($points)-2]) / 2;
                 else $median = $points[count($points) / 2];
             }
             // std deviation
